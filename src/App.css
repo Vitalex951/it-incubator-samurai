@@ -1,0 +1,21 @@
+body {
+  margin: 20px;
+}
+
+.app-wrapper {
+  margin: 0 auto;
+  display: grid;
+  width: 1200px;
+
+  grid-template-areas:
+  "h h"
+  "n c";
+
+  grid-template-rows: 60px 1fr;  /*говорим сколько будет у нас строк,*/
+  grid-template-columns: 2fr 10fr;  /*говорим сколько будет у нас строк,*/
+  /*grid-gap: 10px;*/
+
+}
+
+
+
