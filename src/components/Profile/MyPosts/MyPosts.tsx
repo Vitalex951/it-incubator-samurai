@@ -6,8 +6,8 @@ import Post from "./Posts/Post";
 const MyPosts = () => {
     return (
         <div>
-            <Post message='Hello, how are you?' />
-            <Post message='I am funny thn' />
+            <Post message='Hello, how are you?' likesCount={4} />
+            <Post message='I am funny thn' likesCount={5} />
         </div>
     );
 };

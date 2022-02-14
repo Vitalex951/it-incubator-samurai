@@ -3,6 +3,7 @@ import s from "../MyPosts.module.css";
 
 type MyPostsType = {
     message: string
+    likesCount: number
 }
 
 const Post = (props: MyPostsType) => {
@@ -12,7 +13,7 @@ const Post = (props: MyPostsType) => {
                 src='https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/08/10-Best-Gaming-Team-Logos-and-How-to-Make-Your-Own-CurrentYear-image1-1.png'/>
             {props.message}
             <div>
-                <span> like</span>
+                <span>{props.likesCount} like</span>
             </div>
         </div>
     );
