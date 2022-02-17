@@ -3,4 +3,13 @@
 }
 .item img {
     width: 80px;
+    border-radius: 50%;
+}
+
+.postsBlock {
+    padding: 10px;
+}
+
+.posts {
+    margin-top: 10px;
 }
