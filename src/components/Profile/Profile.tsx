@@ -1,13 +1,29 @@
-import React from 'react';
-import s from './Profile.module.css'
+import React, {useState} from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = () => {
+type ProfileTypeProps = {
+    posts: Array<PostDataPropsType>
+
+}
+
+export type PostDataPropsType = {
+    message: string
+    likes: number
+}
+
+
+const Profile = (props: ProfileTypeProps) => {
+    const [messages, setMessages] = useState(props.posts)
+
+    const addMessage = (message: string) => {
+        setMessages([...messages, {message , likes: 0}])
+
+    }
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts postData={messages} addMessage={addMessage}/>
         </div>
     );
 };

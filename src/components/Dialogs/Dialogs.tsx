@@ -1,70 +1,41 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
 import s from './Dialogs.module.css'
 import {v1} from "uuid";
+import DialogItem from "./DialogsItem/DialogsItem";
+import Message from "./Message/Message";
 
-type DialogItemType = {
-    users: Array<users>
+type DialogsType = {
+    users: Array<UserTypeProps>
+    messages: Array<MessagesTypeProps>
 }
-type users = {
+export type UserTypeProps = {
     name: string
-    id: number
 }
-
-
-type MessageItemType = {
+ export  type MessagesTypeProps = {
     message: string
 }
 
-const DialogItem = (props: users) => {
-    let path = '/dialogs/' + props.id
-    console.log(path)
-    return (
-        <div className={s.dialog + ' ' + s.active}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    )
-}
 
-const Message = (props: MessageItemType) => {
-    return (
-        <div className={s.dialog}>{props.message}</div>
-    )
-}
+const Dialogs: React.FC<DialogsType> = ({users, messages}) => {
 
 
-const Dialogs = () => {
-    let users = [
-        {name: 'Vasya'},
-        {name: 'Vika'},
-        {name: 'Ola'},
-        {name: 'Vital'},
-        {name: 'Stepa'},
-        {name: 'Stas'}
-    ]
-    let messages = [
-        {message: 'Hi'},
-        {message: 'How are you'},
-        {message: 'Good'},
-        {message: 'thx'}
-    ]
-    const newUsers = users.map((t, i) => {
-        return <DialogItem name={t.name} id={i+1} key={v1()}/>
-    })
+    const dialogsElements = users.map((t, i) => <DialogItem name={t.name} id={i + 1} key={v1()}/>)
 
-    const newMessages = messages.map((m, i) => <Message message={m.message} key={v1()}/>
-    )
+    const messagesElements = messages.map((m, i) => <Message message={m.message} key={v1()}/>)
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItem}>
-                {newUsers}
+                {dialogsElements}
             </div>
 
             <div className={s.messages}>
-                {newMessages}
+                {messagesElements}
             </div>
         </div>
     );
 };
 
 export default Dialogs;
+
+
+//19-14

@@ -1,25 +1,39 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {v1} from "uuid";
+import {PostDataPropsType} from "../Profile";
+import {Button} from "../../Button/Button";
+import {Input} from "../../Input/Input";
 
 
-const MyPosts = () => {
-        const postData = [
-            {message: 'Hi', likes: 3},
-            {message: 'Hi', likes: 5},
-            {message: 'How are you', likes: 6},
-        ]
-        const postsData = postData.map((m, i) => <Post message={m.message} likesCount={m.likes} key={v1()}/>
-        )
+type MyPostsType = {
+    postData: Array<PostDataPropsType>
+    addMessage: (message: string) => void
+}
+
+const MyPosts = (props: MyPostsType) => {
+
+        const [title, setTitle] = useState<string>('')
+
+        const postsData = props.postData.map((m, i) => <Post message={m.message} likesCount={m.likes} key={v1()}/>)
+
+        const onClickAdd = () => {
+            props.addMessage(title)
+            setTitle('')
+        }
+
         return (
+
             <div className={s.postsBlock}>
                 <h3>My Post</h3>
                 <div>
                     <div>
-                        <textarea></textarea>
+                        <Input title={title}
+                               setTitle={setTitle}
+                               onClickAdd={onClickAdd}/>
                     </div>
-                    <button>Add post</button>
+                    <Button callback={onClickAdd} name={'add'}/>
                 </div>
                 <div className={s.posts}>
                     {postsData}
@@ -30,5 +44,3 @@ const MyPosts = () => {
 ;
 
 export default MyPosts;
-
-

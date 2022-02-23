@@ -6,7 +6,13 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 
-function App() {
+
+type props = {
+    state: any
+}
+
+function App(props: props) {
+
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
@@ -15,8 +21,12 @@ function App() {
 
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/profile'} element={ <Profile /> } />
-                        <Route path={'/dialogs/*'} element={ <Dialogs/> } />
+                        <Route path={'/profile'} element={<Profile
+                            posts={props.state.profilePage.postData}
+                        />}/>
+                        <Route path={'/dialogs/*'} element={<Dialogs
+                            messages={props.state.dialogsPage.messages}
+                            users={props.state.dialogsPage.users}/>}/>
                     </Routes>
                 </div>
             </div>
