@@ -5,10 +5,11 @@ import NavBar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
+import {RootsStateType} from "./redux/state";
 
 
 type props = {
-    state: any
+    state: RootsStateType
 }
 
 function App(props: props) {
@@ -25,7 +26,7 @@ function App(props: props) {
                             posts={props.state.profilePage.postData}
                         />}/>
                         <Route path={'/dialogs/*'} element={<Dialogs
-                            messages={props.state.dialogsPage.messages}
+                            messages={props.state.dialogsPage.dialogs}
                             users={props.state.dialogsPage.users}/>}/>
                     </Routes>
                 </div>

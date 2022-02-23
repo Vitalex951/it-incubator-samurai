@@ -2,13 +2,13 @@ import React, {useRef, useState} from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {v1} from "uuid";
-import {PostDataPropsType} from "../Profile";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
+import {PostDataType} from "../../../redux/state";
 
 
 type MyPostsType = {
-    postData: Array<PostDataPropsType>
+    postData: Array<PostDataType>
     addMessage: (message: string) => void
 }
 
@@ -16,7 +16,7 @@ const MyPosts = (props: MyPostsType) => {
 
         const [title, setTitle] = useState<string>('')
 
-        const postsData = props.postData.map((m, i) => <Post message={m.message} likesCount={m.likes} key={v1()}/>)
+        const postsData = props.postData.map((m: PostDataType) => <Post message={m.message} likes={m.likes} key={v1()}/>)
 
         const onClickAdd = () => {
             props.addMessage(title)

@@ -1,7 +1,27 @@
-import {useState} from "react";
+export type RootsStateType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+}
+type ProfilePageType ={
+    postData: Array<PostDataType>
+}
+type DialogsPageType ={
+    dialogs: Array<DialogsType>
+    users: Array<UsersType>
+}
+export type PostDataType = {
+    message: string
+    likes: number
+}
+type DialogsType = {
+    message: string
+}
+type UsersType = {
+    name: string
+}
 
 
-let state = {
+let state: RootsStateType = {
     profilePage: {
         postData: [
             {message: 'Hi', likes: 3},
@@ -9,7 +29,7 @@ let state = {
         ]
     },
     dialogsPage: {
-        messages: [
+        dialogs: [
             {message: 'Hi'},
             {message: 'How are you'},
             {message: 'Good'},
