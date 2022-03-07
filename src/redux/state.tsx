@@ -1,9 +1,14 @@
+let rerenderEntireTree = () => {
+    console.log('State change')
+}
+
 export type RootsStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
 type ProfilePageType ={
     postData: Array<PostDataType>
+    newPostText: string
 }
 type DialogsPageType ={
     dialogs: Array<DialogsType>
@@ -26,7 +31,8 @@ let state: RootsStateType = {
         postData: [
             {message: 'Hi', likes: 3},
             {message: 'How are you', likes: 5},
-        ]
+        ],
+        newPostText: 'It Kamasutra'
     },
     dialogsPage: {
         dialogs: [
