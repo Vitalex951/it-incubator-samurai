@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ToDoList/static/css/main.dd901179.css",
-    "main.js": "/ToDoList/static/js/main.259ffb13.js",
-    "static/js/787.28cb0dcd.chunk.js": "/ToDoList/static/js/787.28cb0dcd.chunk.js",
-    "index.html": "/ToDoList/index.html",
-    "main.dd901179.css.map": "/ToDoList/static/css/main.dd901179.css.map",
-    "main.259ffb13.js.map": "/ToDoList/static/js/main.259ffb13.js.map",
-    "787.28cb0dcd.chunk.js.map": "/ToDoList/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/it-incubator-samurai/static/css/main.dd901179.css",
+    "main.js": "/it-incubator-samurai/static/js/main.ce2d9cbf.js",
+    "static/js/787.28cb0dcd.chunk.js": "/it-incubator-samurai/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/it-incubator-samurai/index.html",
+    "main.dd901179.css.map": "/it-incubator-samurai/static/css/main.dd901179.css.map",
+    "main.ce2d9cbf.js.map": "/it-incubator-samurai/static/js/main.ce2d9cbf.js.map",
+    "787.28cb0dcd.chunk.js.map": "/it-incubator-samurai/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dd901179.css",
-    "static/js/main.259ffb13.js"
+    "static/js/main.ce2d9cbf.js"
   ]
 }
