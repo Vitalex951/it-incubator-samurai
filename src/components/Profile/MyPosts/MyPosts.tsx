@@ -4,12 +4,13 @@ import Post from "./Posts/Post";
 import {v1} from "uuid";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {PostDataType} from "../../../redux/state";
+import {ActionsType, PostDataType} from "../../../redux/state";
 
 
 type MyPostsType = {
     postData: Array<PostDataType>
-    addMessage: (message: string) => void
+    addMessage: () => void
+    dispatch:(type: ActionsType) => void
 }
 
 const MyPosts = (props: MyPostsType) => {
@@ -18,8 +19,10 @@ const MyPosts = (props: MyPostsType) => {
 
         const postsData = props.postData.map((m: PostDataType) => <Post message={m.message} likes={m.likes} key={v1()}/>)
 
+
         const onClickAdd = () => {
-            props.addMessage(title)
+            props.dispatch({type: "UPDATE-NEW_POST_TEXT", newText: title})
+            props.addMessage()
             setTitle('')
         }
 
@@ -31,7 +34,8 @@ const MyPosts = (props: MyPostsType) => {
                     <div>
                         <Input title={title}
                                setTitle={setTitle}
-                               onClickAdd={onClickAdd}/>
+                               onClickAdd={onClickAdd}
+                        />
                     </div>
                     <Button callback={onClickAdd} name={'add'}/>
                 </div>

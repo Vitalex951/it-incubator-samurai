@@ -5,11 +5,11 @@ import NavBar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import {RootsStateType} from "./redux/state";
+import {ScoreType} from "./redux/state";
 
 
 type props = {
-    state: RootsStateType
+    store: ScoreType
 }
 
 function App(props: props) {
@@ -22,12 +22,14 @@ function App(props: props) {
 
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/profile'} element={<Profile
-                            posts={props.state.profilePage.postData}
-                        />}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs
-                            messages={props.state.dialogsPage.dialogs}
-                            users={props.state.dialogsPage.users}/>}/>
+                        <Route path={'/profile'}
+                               element={<Profile
+                                   posts={props.store._state.profilePage.postData}
+                                   dispatch={props.store.dispatch.bind(props.store)}
+                                   />}/>
+                        {/*<Route path={'/dialogs/*'}*/}
+                        {/*       element={<Dialogs*/}
+                        {/*           state={props.store._state.dialogsPage}/>}/>*/}
                     </Routes>
                 </div>
             </div>
