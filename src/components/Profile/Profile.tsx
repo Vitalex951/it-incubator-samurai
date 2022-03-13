@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsType, PostDataType} from "../../redux/state";
+import {ActionsTypes, PostDataType} from "../../redux/state";
+import {addPostActionCreator} from "../../redux/Profile-reducer";
 
 type ProfileTypeProps = {
     posts: Array<PostDataType>
-    dispatch:(type: ActionsType) => void
+    dispatch:(type: ActionsTypes) => void
+
 }
 
 
@@ -13,7 +15,7 @@ const Profile = (props: ProfileTypeProps) => {
     const [posts, setMessages] = useState(props.posts)
 
     const addPost = () => {
-        props.dispatch({type: "ADD-POST"})
+        props.dispatch(addPostActionCreator())
         setMessages([...props.posts])
 
     }

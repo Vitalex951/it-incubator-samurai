@@ -1,27 +1,28 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
-import {v1} from "uuid";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {ActionsType, PostDataType} from "../../../redux/state";
+import {ActionsTypes, PostDataType} from "../../../redux/state";
+import {changeNewTextAction} from "../../../redux/Profile-reducer";
 
 
 type MyPostsType = {
     postData: Array<PostDataType>
     addMessage: () => void
-    dispatch:(type: ActionsType) => void
+    dispatch: (type: ActionsTypes) => void
 }
 
 const MyPosts = (props: MyPostsType) => {
 
         const [title, setTitle] = useState<string>('')
 
-        const postsData = props.postData.map((m: PostDataType) => <Post message={m.message} likes={m.likes} key={v1()}/>)
+        const postsData = props.postData.map((m: PostDataType) => <Post message={m.message} likes={m.likes} key={m.id}
+                                                                        id={m.id}/>)
 
 
         const onClickAdd = () => {
-            props.dispatch({type: "UPDATE-NEW_POST_TEXT", newText: title})
+            props.dispatch(changeNewTextAction(title))
             props.addMessage()
             setTitle('')
         }

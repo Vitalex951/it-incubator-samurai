@@ -4,7 +4,7 @@ import s from './Dialogs.module.css'
 
 type users = {
     name: string
-    id: number
+    id: string
 }
 
 const DialogItem = (props: users) => {

@@ -1,104 +1,94 @@
 import {v1} from "uuid";
 
+import {dialogsReducer, DialogsReducerType} from "./dialogs-reducer";
+import {profileReducer, ProfileReducerType} from "./Profile-reducer";
+
 
 export type ScoreType = {
     _state: RootsStateType
-    dispatch: (action: AddPostActionType | UpdateNewTextType) => void
+    dispatch: (action: ActionsTypes) => void
 }
 type RootsStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-
 }
-type ProfilePageType = {
+export type ProfilePageType = {
     postData: Array<PostDataType>
     newPostText: string
 }
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogsType>
     users: Array<UsersType>
+    newMessageBody: string
+
 }
 export type PostDataType = {
+    id: string
     message: string
     likes: number
 }
-type DialogsType = {
+export type DialogsType = {
+    id: string
     message: string
 }
-type UsersType = {
+export type UsersType = {
+    id: string
     name: string
 }
-type AddPostActionType = {
-    type: 'ADD-POST'
-}
-type UpdateNewTextType = {
-    type: 'UPDATE-NEW_POST_TEXT'
-    newText: string
-}
-export type ActionsType = AddPostActionType | UpdateNewTextType
+
+export type ActionsTypes = ProfileReducerType | DialogsReducerType
 
 let store: ScoreType = {
     _state: {
         profilePage: {
             postData: [
-                {message: 'Hi', likes: 3},
-                {message: 'How are you', likes: 5},
+                {id: v1(), message: 'Hi', likes: 3},
+                {id: v1(), message: 'How are you', likes: 5},
             ],
             newPostText: ''
         },
         dialogsPage: {
             dialogs: [
-                {message: 'Hi'},
-                {message: 'How are you'},
-                {message: 'Good'},
-                {message: 'thx'}
+                {id: v1(), message: 'Hi'},
+                {id: v1(), message: 'How are you'},
+                {id: v1(), message: 'Good'},
+                {id: v1(), message: 'thx'}
             ],
             users: [
-                {name: 'Vasya'},
-                {name: 'Vika'},
-                {name: 'Ola'},
-                {name: 'Vital'},
-                {name: 'Stepa'},
-                {name: 'Stas'}
+                {id: v1(), name: 'Vasya'},
+                {id: v1(), name: 'Vika'},
+                {id: v1(), name: 'Ola'},
+                {id: v1(), name: 'Vital'},
+                {id: v1(), name: 'Stepa'},
+                {id: v1(), name: 'Stas'}
             ],
+            newMessageBody: ''
 
         }
     },
-    // rerenderEntireTree () {
-    //     console.log('State change')
-    // },
-    // addPost() {
-    //     let newPost = {
-    //         id: v1(),
-    //         message: this._state.profilePage.newPostText,
-    //         likes: 0
-    //     }
-    //     this._state.profilePage.postData.push(newPost)
-    //     // this._state.profilePage.newPostText = ''
-    //     // this.rerenderEntireTree(this._state)
-    //
-    // },
-    // getState() {
-    //     return this._state
-    // },
-    // updateNewPostText(newText: string) {
-    //     this._state.profilePage.newPostText = newText
-    //     // this.rerenderEntireTree(this._state)
-    // },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPost = {
-                id: v1(),
-                message: this._state.profilePage.newPostText,
-                likes: 0
-            }
-            this._state.profilePage.postData.push(newPost)
-            this._state.profilePage.newPostText = ''
-        } else if (action.type === 'UPDATE-NEW_POST_TEXT') {
-            this._state.profilePage.newPostText = action.newText
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+
+        // if (action.type === 'ADD-POST') {
+        //     let newPost = {
+        //         id: v1(),
+        //         message: this._state.profilePage.newPostText,
+        //         likes: 0
+        //     }
+        //     this._state.profilePage.postData.push(newPost)
+        //     this._state.profilePage.newPostText = ''
+        // } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+        //     this._state.profilePage.newPostText = action.newText
+        // } else if (action.type === 'UPDATE-NEW-TEXT-BODY') {
+        //     this._state.dialogsPage.newMessageBody = action.body
+        // } else if (action.type === 'SEND-MESSAGE') {
+        //     debugger
+        //     let body = this._state.dialogsPage.newMessageBody
+        //     this._state.dialogsPage.newMessageBody = ''
+        //     this._state.dialogsPage.dialogs.push({id: v1(), message: body})
         }
-    }
+
 }
 
 export default store;
-

@@ -27,9 +27,10 @@ function App(props: props) {
                                    posts={props.store._state.profilePage.postData}
                                    dispatch={props.store.dispatch.bind(props.store)}
                                    />}/>
-                        {/*<Route path={'/dialogs/*'}*/}
-                        {/*       element={<Dialogs*/}
-                        {/*           state={props.store._state.dialogsPage}/>}/>*/}
+                        <Route path={'/dialogs/*'}
+                               element={<Dialogs
+                                   state={props.store._state.dialogsPage}
+                               dispatch={props.store.dispatch.bind(props.store)}/>}/>
                     </Routes>
                 </div>
             </div>
