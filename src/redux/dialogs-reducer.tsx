@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {ActionsTypes, DialogsPageType} from "./store";
 
 export type DialogsReducerType = ReturnType<typeof updateNewMessageBody>
     | ReturnType<typeof sendMessage>
@@ -16,8 +17,24 @@ export const sendMessage = () => {
     } as const
 }
 
-export  const dialogsReducer = (state: any, action: any) => {
-    console.log(state)
+let initialState = {
+    dialogs: [
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'How are you'},
+        {id: v1(), message: 'Good'},
+        {id: v1(), message: 'thx'}
+    ],
+    users: [
+        {id: v1(), name: 'Vasya'},
+        {id: v1(), name: 'Vika'},
+        {id: v1(), name: 'Ola'},
+        {id: v1(), name: 'Vital'},
+        {id: v1(), name: 'Stepa'},
+        {id: v1(), name: 'Stas'}
+    ],
+    newMessageBody: ''
+}
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case 'UPDATE-NEW-TEXT-BODY':
             state.newMessageBody = action.body
@@ -27,5 +44,6 @@ export  const dialogsReducer = (state: any, action: any) => {
             state.newMessageBody = ''
             state.dialogs.push({id: v1(), message: body})
             return state
+        default: return  state
     }
 }

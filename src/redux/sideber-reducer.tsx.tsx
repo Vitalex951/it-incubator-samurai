@@ -1,11 +1,9 @@
 import React from 'react';
 
-const SideberReducerTsx = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+let initialState = {}
+
+export const sideberReducerTsx = (state = initialState, action: any) => {
+    return state
+
 };
 
-export default SideberReducerTsx;

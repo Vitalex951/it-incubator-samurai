@@ -3,7 +3,7 @@ import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {ActionsTypes, PostDataType} from "../../../redux/state";
+import {ActionsTypes, PostDataType} from "../../../redux/store";
 import {changeNewTextAction} from "../../../redux/Profile-reducer";
 
 
@@ -17,8 +17,10 @@ const MyPosts = (props: MyPostsType) => {
 
         const [title, setTitle] = useState<string>('')
 
-        const postsData = props.postData.map((m: PostDataType) => <Post message={m.message} likes={m.likes} key={m.id}
-                                                                        id={m.id}/>)
+        const postsData = props.postData.map((m: PostDataType) => <Post
+            message={m.message} likes={m.likes}
+            key={m.id}
+            id={m.id}/>)
 
 
         const onClickAdd = () => {

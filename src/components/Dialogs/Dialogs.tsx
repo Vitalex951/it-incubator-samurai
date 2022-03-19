@@ -8,7 +8,7 @@ import {
     DialogsPageType,
     DialogsType,
     UsersType
-} from "../../redux/state";
+} from "../../redux/store";
 import {Input} from "../Input/Input";
 import {Button} from "../Button/Button";
 import {sendMessage, updateNewMessageBody} from "../../redux/dialogs-reducer";
