@@ -4,7 +4,8 @@ import {DialogsReducerType} from "./dialogs-reducer";
 import {ProfileReducerType} from "./Profile-reducer";
 
 
-export type ScoreType = {
+
+type ScoreType = {
     _state: RootsStateType
     // dispatch: (action: ActionsTypes) => void
 }
@@ -13,17 +14,17 @@ type RootsStateType = {
     dialogsPage: DialogsPageType
     sidebar: any
 }
-export type ProfilePageType = {
+ type ProfilePageType = {
     postData: Array<PostDataType>
     // newPostText: string
 }
-export type DialogsPageType = {
+ type DialogsPageType = {
     dialogs: Array<DialogsType>
     users: Array<UsersType>
     // newMessageBody: string
 
 }
-export type PostDataType = {
+ type PostDataType = {
     id: string
     message: string
     likes: number
@@ -37,7 +38,7 @@ export type UsersType = {
     name: string
 }
 
-export type ActionsTypes = ProfileReducerType | DialogsReducerType
+
 
 let store: ScoreType = {
     _state: {

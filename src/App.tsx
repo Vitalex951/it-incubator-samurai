@@ -5,6 +5,7 @@ import NavBar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Dialogs from './components/Dialogs/Dialogs';
+import {UsersConnect} from "./components/users/UsersConnect";
 
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
                                element={<Dialogs
                                    /* state={state.dialogsReducer}
                                     dispatch={props.store.dispatch.bind(props.store)}*//>}/>
+                        <Route path={'/users/*'}
+                               element={<UsersConnect
+                                 />}/>
 
                     </Routes>
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "../MyPosts.module.css";
-import {PostDataType} from "../../../../redux/store";
+import {PostDataType} from "../../../../redux/Profile-reducer";
 
 type MyPostsType = PostDataType
 

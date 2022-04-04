@@ -3,8 +3,7 @@ import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {PostDataType, ProfilePageType, UsersType} from "../../../redux/store";
-import {addPostActionCreator} from "../../../redux/Profile-reducer";
+import {addPostActionCreator, PostDataType} from "../../../redux/Profile-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootReducerType} from "../../store/state/state";
 

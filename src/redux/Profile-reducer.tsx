@@ -1,8 +1,12 @@
 import {v1} from "uuid";
-import {ActionsTypes, PostDataType, ProfilePageType} from "./store";
 
 export type ProfileReducerType = ReturnType<typeof addPostActionCreator>
 
+export type PostDataType = {
+    id: string
+    message: string
+    likes: number
+}
 
 export const addPostActionCreator = (title: string) => {
     return {
@@ -23,7 +27,7 @@ let initialState = [
 ]
 
 
-export const profileReducer = (state: Array<PostDataType> = initialState, action: ActionsTypes): Array<PostDataType> => {
+export const profileReducer = (state: Array<PostDataType> = initialState, action: ProfileReducerType): Array<PostDataType> => {
 
     switch (action.type) {
         case 'ADD-POST':

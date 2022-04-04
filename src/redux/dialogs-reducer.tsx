@@ -1,19 +1,19 @@
 import {v1} from "uuid";
-import {ActionsTypes, DialogsPageType} from "./store";
+import {DialogsType, UsersType} from "./store";
 
 export type DialogsReducerType = ReturnType<typeof sendMessage>
 
-
-// export const updateNewMessageBody = (body: string) => {
-//     return {
-//         type: 'UPDATE-NEW-TEXT-BODY',
-//         body
-//     } as const
-// }
 export const sendMessage = (title: string) => {
     return {
         type: 'SEND-MESSAGE', title
     } as const
+}
+
+export type DialogsPageType = {
+    dialogs: Array<DialogsType>
+    users: Array<UsersType>
+    // newMessageBody: string
+
 }
 
 let initialState = {
@@ -33,7 +33,7 @@ let initialState = {
     ],
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerType) => {
     switch (action.type) {
         case 'SEND-MESSAGE':
             return {
