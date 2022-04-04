@@ -4,15 +4,10 @@ import Header from "./components/Header/Header";
 import NavBar from "./components/Navbar/Navbar";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
-import {ReduxStoreType} from "./redux/redux-store";
+import Dialogs from './components/Dialogs/Dialogs';
 
-type AppPropsType = {
-    store: ReduxStoreType
-}
 
-function App(props: AppPropsType) {
-    const state = props.store.getState()
+function App() {
 
     return (
         <BrowserRouter>
@@ -24,13 +19,14 @@ function App(props: AppPropsType) {
                     <Routes>
                         <Route path={'/profile'}
                                element={<Profile
-                                   posts={state.profileReducer}
-                                   dispatch={props.store.dispatch.bind(props.store)}
+                                   // posts={state.profileReducer}
+                                   // dispatch={props.store.dispatch.bind(props.store)}
                                />}/>
                         <Route path={'/dialogs/*'}
                                element={<Dialogs
-                                   state={state.dialogsReducer}
-                                   dispatch={props.store.dispatch.bind(props.store)}/>}/>
+                                   /* state={state.dialogsReducer}
+                                    dispatch={props.store.dispatch.bind(props.store)}*//>}/>
+
                     </Routes>
                 </div>
             </div>
@@ -39,3 +35,4 @@ function App(props: AppPropsType) {
 }
 
 export default App;
+//

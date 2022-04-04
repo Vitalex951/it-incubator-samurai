@@ -1,27 +1,28 @@
 import React, {useState} from 'react';
 import s from './Dialogs.module.css'
-import {v1} from "uuid";
 import DialogItem from "./DialogsItem/DialogsItem";
-import Message from "./Message/Message";
-import {
-    ActionsTypes,
-    DialogsPageType,
-    DialogsType,
-    UsersType
-} from "../../redux/store";
+import {DialogsType, UsersType} from "../../redux/store";
 import {Input} from "../Input/Input";
 import {Button} from "../Button/Button";
-import {sendMessage, updateNewMessageBody} from "../../redux/dialogs-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootReducerType} from "../store/state/state";
+import {sendMessage} from "../../redux/dialogs-reducer";
+import Message from "./Message/Message";
+import {v1} from "uuid";
 
 type DialogsPropsType = {
-    state: DialogsPageType
-    dispatch: (type: ActionsTypes) => void
+    // state: DialogsPageType
+    // dispatch: (type: ActionsTypes) => void
 }
 
-const Dialogs = (props: DialogsPropsType) => {
-    const [users, setUsers] = useState<Array<UsersType>>(props.state.users)
-    const [dialogs, setDialogs] = useState<Array<DialogsType>>(props.state.dialogs)
-    const [body, setBody] = useState<string>('')
+const Dialogs = () => {
+    // const [users, setUsers] = useState<Array<UsersType>>(props.state.users)
+    // const [dialogs, setDialogs] = useState<Array<DialogsType>>(props.state.dialogs)
+
+    const users = useSelector<AppRootReducerType, Array<UsersType>>(state => state.dialogs.users)
+    const [title, setTitle] = useState<string>('')
+    const dialogs = useSelector<AppRootReducerType, Array<DialogsType>>(state => state.dialogs.dialogs)
+    const dispatch = useDispatch()
 
     const dialogsElements = users.map((t, i) => <DialogItem
         name={t.name}
@@ -34,10 +35,8 @@ const Dialogs = (props: DialogsPropsType) => {
         key={v1()}/>)
 
     const onclickAddNewBody = () => {
-        props.dispatch(updateNewMessageBody(body))
-        props.dispatch(sendMessage())
-        setDialogs([...props.state.dialogs])
-        setBody('')
+        dispatch(sendMessage(title))
+        setTitle('')
     }
 
 
@@ -51,8 +50,8 @@ const Dialogs = (props: DialogsPropsType) => {
                 {messagesElements}
                 <div>
                     <div>
-                        <Input title={body}
-                               setTitle={setBody}
+                        <Input title={title}
+                               setTitle={setTitle}
                                onClickAdd={onclickAddNewBody}/>
                     </div>
                     <div>

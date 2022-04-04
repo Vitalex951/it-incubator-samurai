@@ -15,12 +15,12 @@ type RootsStateType = {
 }
 export type ProfilePageType = {
     postData: Array<PostDataType>
-    newPostText: string
+    // newPostText: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     users: Array<UsersType>
-    newMessageBody: string
+    // newMessageBody: string
 
 }
 export type PostDataType = {
@@ -46,7 +46,6 @@ let store: ScoreType = {
                 {id: v1(), message: 'Hi', likes: 3},
                 {id: v1(), message: 'How are you', likes: 5},
             ],
-            newPostText: ''
         },
         dialogsPage: {
             dialogs: [
@@ -63,7 +62,6 @@ let store: ScoreType = {
                 {id: v1(), name: 'Stepa'},
                 {id: v1(), name: 'Stas'}
             ],
-            newMessageBody: ''
 
         },
         sidebar: {}

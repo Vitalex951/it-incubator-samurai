@@ -1,19 +1,18 @@
 import {v1} from "uuid";
 import {ActionsTypes, DialogsPageType} from "./store";
 
-export type DialogsReducerType = ReturnType<typeof updateNewMessageBody>
-    | ReturnType<typeof sendMessage>
+export type DialogsReducerType = ReturnType<typeof sendMessage>
 
 
-export const updateNewMessageBody = (body: string) => {
+// export const updateNewMessageBody = (body: string) => {
+//     return {
+//         type: 'UPDATE-NEW-TEXT-BODY',
+//         body
+//     } as const
+// }
+export const sendMessage = (title: string) => {
     return {
-        type: 'UPDATE-NEW-TEXT-BODY',
-        body
-    } as const
-}
-export const sendMessage = () => {
-    return {
-        type: 'SEND-MESSAGE',
+        type: 'SEND-MESSAGE', title
     } as const
 }
 
@@ -32,18 +31,19 @@ let initialState = {
         {id: v1(), name: 'Stepa'},
         {id: v1(), name: 'Stas'}
     ],
-    newMessageBody: ''
 }
+
 export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
-        case 'UPDATE-NEW-TEXT-BODY':
-            state.newMessageBody = action.body
-            return state
         case 'SEND-MESSAGE':
-            let body = state.newMessageBody
-            state.newMessageBody = ''
-            state.dialogs.push({id: v1(), message: body})
+            return {
+                ...state,
+                dialogs: [
+                    ...state.dialogs,
+                    {id: v1(), message: action.title}
+                ]
+            }
+        default:
             return state
-        default: return  state
     }
 }

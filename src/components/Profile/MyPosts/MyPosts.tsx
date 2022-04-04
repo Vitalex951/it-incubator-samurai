@@ -3,29 +3,30 @@ import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {ActionsTypes, PostDataType} from "../../../redux/store";
-import {changeNewTextAction} from "../../../redux/Profile-reducer";
+import {PostDataType, ProfilePageType, UsersType} from "../../../redux/store";
+import {addPostActionCreator} from "../../../redux/Profile-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootReducerType} from "../../store/state/state";
 
 
 type MyPostsType = {
-    postData: Array<PostDataType>
-    addMessage: () => void
-    dispatch: (type: ActionsTypes) => void
+    // postData: Array<PostDataType>
 }
 
-const MyPosts = (props: MyPostsType) => {
-
+const MyPosts = () => {
         const [title, setTitle] = useState<string>('')
 
-        const postsData = props.postData.map((m: PostDataType) => <Post
+        const dispatch = useDispatch()
+
+        const posts = useSelector<AppRootReducerType, Array<PostDataType>>(state => state.profile)
+
+        const postsData = posts.map(m => <Post
             message={m.message} likes={m.likes}
             key={m.id}
             id={m.id}/>)
 
-
         const onClickAdd = () => {
-            props.dispatch(changeNewTextAction(title))
-            props.addMessage()
+            dispatch(addPostActionCreator(title))
             setTitle('')
         }
 
