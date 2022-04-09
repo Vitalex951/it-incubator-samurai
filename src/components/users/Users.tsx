@@ -1,19 +1,53 @@
 import React from 'react';
-import {followAC, unfollowAC, usersType} from "../../redux/users-reducer";
+import {followAC, getStateAC, setStateAC, unfollowAC, usersType} from "../../redux/users-reducer";
 import s from './Users.module.css'
 import {Button} from "../Button/Button";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import {userType} from "./UsersConnect";
+import {AppRootReducerType} from "../store/state/state";
 
-type usersPropsType = {
-    users: usersType
-}
 
-export const Users = (props: usersPropsType) => {
+export const Users = () => {
+
+    const pageSize = useSelector<AppRootReducerType, number>(state =>state.users.pageSize)
+    const totalUsersCount = useSelector<AppRootReducerType, number>(state =>state.users.totalUsersCount)
+    const currentPage = useSelector<AppRootReducerType, number>(state =>state.users.currentPage)
+
+    const users= useSelector<AppRootReducerType, userType[]>(state => {
+        return state.users.items
+    } )
+
     const dispatch = useDispatch()
+
+    const getUsers = () => {
+        console.log(currentPage)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then(response => {
+                dispatch(getStateAC(response.data.items))
+            }
+        )
+    }
+
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
+    let pages = []
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
     return (
         <div>
+            {pages.map(el => {
+                const setCurrentPageHandler = () => {
+                    dispatch(setStateAC(el))
+                    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then(response => {
+                            dispatch(getStateAC(response.data.items))
+                        }
+                    )
+                }
+                return <span onClick={setCurrentPageHandler} className={el === currentPage? s.selectedPage: ''}>{el}</span>
+            })}
+            <button onClick={getUsers}>Get Users</button>
             {
-                props.users.users.map(el => <div key={el.id}>
+               users.map(el => <div key={el.id}>
                     <span>
                         <div>
                             <img className={s.userPhoto}
@@ -34,12 +68,12 @@ export const Users = (props: usersPropsType) => {
                                     </span>
                     <span>
                                     <span>
-                                    <div>{el.fullName}</div>
+                                    <div>{el.name}</div>
                                     <div>{el.status}</div>
                                     </span>
                                     <span>
-                                    <div>{el.locations.country}</div>
-                                    <div>{el.locations.city}</div>
+                                    <div>el.locations.city</div>
+                                    <div>el.locations.city</div>
                                     </span>
                                     </span>
                 </div>)

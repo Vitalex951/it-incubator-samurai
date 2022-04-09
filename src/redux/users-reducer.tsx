@@ -2,81 +2,76 @@ import {v1} from "uuid";
 
 
 export type usersType = {
-    users: Array<userType>
+    items: userType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
 type userType = {
-    id: string
-    fullName: string
-    status: string
-    followed: boolean
-    locations: {
-        city: string
-        country: string
-    }
+    "name": string
+    "id": number
+    "uniqueUrlName": any
+    "photos": {
+        "small": any
+        "large": any
+    },
+    "status": any
+    "followed": boolean
 }
+
 
 let initialState: usersType = {
-    users: [
+    items: [
         {
-            id: v1(),
-            followed: true,
-            fullName: 'Vital',
-            status: 'I am a boss',
-            locations: {city: 'Bobruisk', country: 'Belarus'}
-        },
-        {
-            id: v1(),
-            followed: true,
-            fullName: 'Misha',
-            status: 'I am a bigboss',
-            locations: {city: 'Minsk', country: 'Belarus'}
-        },
-        {
-            id: v1(),
-            followed: false,
-            fullName: 'Vika',
-            status: 'I am a girl',
-            locations: {city: 'Odessa', country: 'Urkaine'}
-        },
-        {
-            id: v1(),
-            followed: false,
-            fullName: 'Tolya',
-            status: 'I am a boy',
-            locations: {city: 'Kiev', country: 'Ukraine'}
-        },
-    ]
+            "name": "Fron",
+            "id": 23348,
+            "uniqueUrlName": null,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        }, ],
+    pageSize: 5,
+    totalUsersCount: 25,
+    currentPage: 1
+
 }
 
+
 export const usersReducer = (state: usersType = initialState, action: actionsType): usersType => {
+    console.log(action)
 
     switch (action.type) {
         case "FOLLOW": {
-            return {
-                ...state,
-                users: state.users.map(el => el.id === action.userID? {...el, followed: true}: el)
-            }
+
+            return {...state, items: state.items.map(el => el.id === action.userID ? {...el, followed: true} : el)}
         }
         case "UNFOLLOW": {
-            return {
-                ...state,
-                users: state.users.map(el => el.id === action.userID? {...el, followed: false}: el)
-            }
+            return {...state, items: state.items.map(el => el.id === action.userID ? {...el, followed: false} : el)}
+
+        }
+        case "GET-STATE": {
+            return {...state, items: [...action.newState]}
+        }
+        case "SET-STATE": {
+            return  {...state, currentPage: action.currentPage}
         }
         default:
-            return state
+           return state
     }
 };
 
 
-type actionsType = followACType | unfollowACType
+type actionsType = followACType | unfollowACType | getStateACType | setStateACType
 
 type followACType = {
     type: "FOLLOW"
-    userID: string
+    userID: number
 }
-export const followAC = (userID:string): followACType => {
+export const followAC = (userID: number): followACType => {
     return {
         type: "FOLLOW",
         userID
@@ -86,12 +81,34 @@ export const followAC = (userID:string): followACType => {
 
 type unfollowACType = {
     type: "UNFOLLOW"
-    userID: string
+    userID: number
 }
-export const unfollowAC = (userID:string):unfollowACType => {
+export const unfollowAC = (userID: number): unfollowACType => {
     return {
         type: "UNFOLLOW",
         userID
+    }
+}
+
+type getStateACType = {
+    type: "GET-STATE",
+    newState: userType[]
+}
+export const getStateAC = (newState: userType[]): getStateACType => {
+    return {
+        type: "GET-STATE",
+        newState
+    }
+}
+
+type setStateACType = {
+    type: "SET-STATE"
+    currentPage: number
+}
+export const setStateAC = (currentPage: number): setStateACType => {
+    return {
+        type: "SET-STATE",
+        currentPage
     }
 }
 
