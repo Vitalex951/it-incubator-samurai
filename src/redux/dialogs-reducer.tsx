@@ -12,7 +12,6 @@ export const sendMessage = (title: string) => {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     users: Array<UsersType>
-    // newMessageBody: string
 
 }
 

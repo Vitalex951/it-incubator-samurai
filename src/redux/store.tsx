@@ -1,9 +1,5 @@
 import {v1} from "uuid";
 
-import {DialogsReducerType} from "./dialogs-reducer";
-import {ProfileReducerType} from "./Profile-reducer";
-
-
 
 type ScoreType = {
     _state: RootsStateType
@@ -92,4 +88,3 @@ let store: ScoreType = {
 
 }
 
-export default store;

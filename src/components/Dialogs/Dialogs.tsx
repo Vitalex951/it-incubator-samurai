@@ -5,7 +5,7 @@ import {DialogsType, UsersType} from "../../redux/store";
 import {Input} from "../Input/Input";
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../store/state/state";
+import {AppRootReducerType} from "../store/store";
 import {sendMessage} from "../../redux/dialogs-reducer";
 import Message from "./Message/Message";
 import {v1} from "uuid";
@@ -55,7 +55,7 @@ const Dialogs = () => {
                                onClickAdd={onclickAddNewBody}/>
                     </div>
                     <div>
-                        <Button callback={onclickAddNewBody} name={'add'}/>
+                        <Button disabled={false} callback={onclickAddNewBody} name={'add'}/>
                     </div>
                 </div>
             </div>

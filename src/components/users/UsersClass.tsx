@@ -4,7 +4,7 @@ import s from './Users.module.css'
 import {Button} from "../Button/Button";
 import {useDispatch} from "react-redux";
 import axios from "axios";
-import {userType} from "./UsersConnect";
+import {userType} from "./UsersContainer";
 
 type usersPropsType = {
     users: userType[]

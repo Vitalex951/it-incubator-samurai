@@ -3,12 +3,13 @@ import React from 'react';
 type buttonPropsType = {
     callback: () => void
     name: string
+    disabled: boolean
 }
-export const Button = (props: buttonPropsType) => {
-    const onClickButtonHeader = ()=> {
+export const Button = React.memo((props: buttonPropsType) => {
+    const onClickButtonHeader = () => {
         props.callback()
     }
     return (
-        <button onClick={onClickButtonHeader}>{props.name}</button>
+        <button disabled={props.disabled} onClick={onClickButtonHeader}>{props.name}</button>
     );
-};
+});

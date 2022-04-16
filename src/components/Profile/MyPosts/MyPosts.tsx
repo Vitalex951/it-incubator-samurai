@@ -3,29 +3,27 @@ import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
 import {Button} from "../../Button/Button";
 import {Input} from "../../Input/Input";
-import {addPostActionCreator, PostDataType} from "../../../redux/Profile-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../../store/state/state";
+import {addPostAC, PostDataType} from "../../../redux/Profile-reducer";
+import {useDispatch} from "react-redux";
 
-
-type MyPostsType = {
-    // postData: Array<PostDataType>
+type MyPostsPropsType = {
+    posts: Array<PostDataType>
 }
 
-const MyPosts = () => {
+const MyPosts = (props: MyPostsPropsType) => {
         const [title, setTitle] = useState<string>('')
 
         const dispatch = useDispatch()
 
-        const posts = useSelector<AppRootReducerType, Array<PostDataType>>(state => state.profile)
 
-        const postsData = posts.map(m => <Post
+
+        const postsData = props.posts.map(m => <Post
             message={m.message} likes={m.likes}
             key={m.id}
             id={m.id}/>)
 
         const onClickAdd = () => {
-            dispatch(addPostActionCreator(title))
+            dispatch(addPostAC(title))
             setTitle('')
         }
 
@@ -40,7 +38,7 @@ const MyPosts = () => {
                                onClickAdd={onClickAdd}
                         />
                     </div>
-                    <Button callback={onClickAdd} name={'add'}/>
+                    <Button disabled={false}  callback={onClickAdd} name={'add'}/>
                 </div>
                 <div className={s.posts}>
                     {postsData}
