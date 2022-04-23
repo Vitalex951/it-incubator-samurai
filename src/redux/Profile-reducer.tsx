@@ -1,4 +1,6 @@
+import { Dispatch } from "redux";
 import {v1} from "uuid";
+import {UserAPI} from "../components/api/Api";
 
 
 type StateType = {
@@ -40,7 +42,7 @@ export let initialState = {
         {id: v1(), message: 'Hi', likes: 3},
         {id: v1(), message: 'How are you', likes: 5},
     ],
-    profile: {
+    profile:       {
         "aboutMe": "я круто чувак 1001%",
         "contacts": {
             "facebook": "facebook.com",
@@ -99,4 +101,16 @@ export const setUserProfileAC = (profile: ProfileType) => {
         type: "SET-PROFILE",
         profile
     } as const
+}
+
+export const showProfileUser = (paramsID: string | undefined) => (dispatch: Dispatch) => {
+    if (paramsID) {
+        UserAPI.showMainUser(paramsID)
+            .then(response => {
+                    dispatch(setUserProfileAC(response.data))
+                }
+            )
+    } else  {
+        dispatch(setUserProfileAC(initialState.profile))
+    }
 }

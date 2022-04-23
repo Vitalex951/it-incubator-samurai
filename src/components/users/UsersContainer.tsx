@@ -4,10 +4,9 @@ import {Users} from "./Users";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootReducerType} from "../store/store";
 import {
-    followAC,
-    getStateAC,
-    setStateAC,
-    toggleisFetchingAC,
+    changeCurrentPageAC,
+    changeFollowCreator, changeUNFollowCreator,
+    getUsersThunkCreator,
     toggleisFollowingProgressAC,
     unfollowAC
 } from "../../redux/users-reducer";
@@ -41,45 +40,23 @@ export const UsersContainer = () => {
     const followingInProgress = useSelector<AppRootReducerType, number[]>(state => state.users.followingInProgress)
 
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(toggleisFetchingAC(true))
 
-        UserAPI.getUsers(currentPage, pageSize)
-            .then(response => {
-                    dispatch(getStateAC(response.items))
-                    dispatch(toggleisFetchingAC(false))
-                }
-            )
+
+    useEffect(() => {
+        dispatch(getUsersThunkCreator(currentPage, pageSize))
     }, [currentPage])
 
     const addUnFollow = (id: number) => {
-        dispatch(toggleisFollowingProgressAC(id,true))
-        UserAPI.unFollowUser(id)
-            .then(response => {
-
-                console.log(response)
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowAC(id))
-                }
-                dispatch(toggleisFollowingProgressAC(id,false))
-            })
+       dispatch(changeUNFollowCreator(id))
 
     }
     const addFollow = (id: number) => {
-        dispatch(toggleisFollowingProgressAC(id,true))
-        UserAPI.followUser(id)
-            .then(response => {
-                console.log(response)
-                if (response.data.resultCode === 0) {
-                    dispatch(followAC(id))
-                }
-                dispatch(toggleisFollowingProgressAC(id,false))
-
-            })
+     dispatch(changeFollowCreator(id))
 
     }
-    const setCurrentPage = (el: number) => {
-        dispatch(setStateAC(el))
+    const setCurrentPage = (currentPage: number) => {
+        // dispatch(getUsersThunkCreator(currentPage, pageSize))
+        dispatch(changeCurrentPageAC(currentPage))
     }
 
 

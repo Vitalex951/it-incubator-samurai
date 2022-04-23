@@ -9,20 +9,22 @@ import {AppRootReducerType} from "../store/store";
 import {sendMessage} from "../../redux/dialogs-reducer";
 import Message from "./Message/Message";
 import {v1} from "uuid";
+import {Login} from "../login/Login";
+import {Navigate, Route} from "react-router-dom";
 
 type DialogsPropsType = {
     // state: DialogsPageType
     // dispatch: (type: ActionsTypes) => void
 }
 
-const Dialogs = () => {
-    // const [users, setUsers] = useState<Array<UsersType>>(props.state.users)
-    // const [dialogs, setDialogs] = useState<Array<DialogsType>>(props.state.dialogs)
+const DialogsContainer = () => {
+
 
     const users = useSelector<AppRootReducerType, Array<UsersType>>(state => state.dialogs.users)
     const [title, setTitle] = useState<string>('')
     const dialogs = useSelector<AppRootReducerType, Array<DialogsType>>(state => state.dialogs.dialogs)
     const dispatch = useDispatch()
+    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.isAuth)
 
     const dialogsElements = users.map((t, i) => <DialogItem
         name={t.name}
@@ -39,6 +41,7 @@ const Dialogs = () => {
         setTitle('')
     }
 
+    if (!auth) return <Navigate to="/login"/>
 
     return (
         <div className={s.dialogs}>
@@ -63,4 +66,4 @@ const Dialogs = () => {
     );
 };
 
-export default Dialogs;
+export default DialogsContainer;
