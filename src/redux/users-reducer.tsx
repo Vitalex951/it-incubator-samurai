@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {UserAPI} from "../components/api/Api";
+import {ProfileApi, UserAPI} from "../components/api/Api";
 
 
 export type usersType = {
@@ -155,7 +155,7 @@ export const toggleisFollowingProgressAC = (userID: number, isFetching: boolean)
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFetchingAC(true))
-    UserAPI.getUsers(currentPage, pageSize)
+    ProfileApi.getUsers(currentPage, pageSize)
         .then(response => {
                 dispatch(getStateAC(response.items))
                 dispatch(toggleisFetchingAC(false))

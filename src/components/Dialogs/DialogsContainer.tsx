@@ -53,8 +53,8 @@ const DialogsContainer = () => {
                 {messagesElements}
                 <div>
                     <div>
-                        <Input title={title}
-                               setTitle={setTitle}
+                        <Input value={title}
+                               setValue={setTitle}
                                onClickAdd={onclickAddNewBody}/>
                     </div>
                     <div>

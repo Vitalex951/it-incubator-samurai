@@ -1,5 +1,5 @@
 import {Dispatch} from "redux"
-import {UserAPI} from "../components/api/Api";
+import {AuthApi} from "../components/api/Api";
 
 export type AuthType = {
     id: null | number
@@ -39,13 +39,21 @@ export const setUserDataAC = (id: number, login: string, email: string, isAuth: 
     } as const
 }
 export const AuthUserCreator = () => (dispatch: Dispatch) => {
-    UserAPI.auth()
+    AuthApi.auth()
         .then(response => {
-        if (response.data.resultCode === 0) {
-            let {id, login, email} = response.data.data
-            dispatch(setUserDataAC(id, login, email, true))
-        }
-    })
+            if (response.data.resultCode === 0) {
+                let {id, login, email} = response.data.data
+                dispatch(setUserDataAC(id, login, email, true))
+            }
+        })
+}
+export const AuthUserRegistrationCreator = (email: string, password: string, rememberMe: boolean = false) => (dispatch: Dispatch) => {
+    AuthApi.authRegistration(email, password, rememberMe)
+        .then(response => {
+            console.log(response)
+            if (response.data.resultCode === 0) {
+            }
+        })
 }
 
 

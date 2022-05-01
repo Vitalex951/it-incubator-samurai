@@ -14,7 +14,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
-              <HeaderContainer/>
+                <HeaderContainer/>
                 <NavBar/>
 
                 <div className={'app-wrapper-content'}>
@@ -29,7 +29,7 @@ function App() {
                                element={<UsersContainer/>}/>
                         <Route path={'/login'}
                                element={<Login/>}/>
-
+                        <Route path={'/*'} element={<Login/>}/>
                     </Routes>
                 </div>
             </div>

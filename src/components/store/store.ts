@@ -5,6 +5,7 @@ import {usersReducer} from "../../redux/users-reducer";
 import {authReducer} from "../../redux/auth-reducer";
 import thunkMiddleware from 'redux-thunk';
 
+
 const rootReducer = combineReducers({
     dialogs: dialogsReducer,
     profile: profileReducer,

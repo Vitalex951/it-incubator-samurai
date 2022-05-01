@@ -1,26 +1,34 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 
 type InputPropsType = {
-    title: string
-    setTitle: (title: string) => void
-    onClickAdd: () => void
-
+    value: string
+    autoFocus?: boolean
+    setValue: (title: string) => void
+    onClickAdd?: () => void
+    onKey?: (e: KeyboardEvent<HTMLInputElement>) => void
+    onBlur?: (isDone: boolean) => void
 }
 
 export const Input = (props: InputPropsType) => {
     const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setTitle(e.currentTarget.value)
+        props.setValue(e.currentTarget.value)
+    }
+    const onBlurHandler = () => {
+        props.onBlur && props.onBlur(false)
+    }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        props.onKey && props.onKey(e)
+        props.onClickAdd
+        && e.key === 'Enter'
+        && props.onClickAdd()
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            props.onClickAdd()
-        }
-    }
     return (
         <input className={''}
+               autoFocus={props.autoFocus? props.autoFocus: false}
                onChange={onChangeInputHandler}
                onKeyPress={onKeyPressHandler}
-               value={props.title}/>
+               onBlur={onBlurHandler}
+               value={props.value}/>
     );
 };

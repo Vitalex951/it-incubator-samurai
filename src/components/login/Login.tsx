@@ -1,7 +1,14 @@
-import React from 'react';
+import React from "react";
+import {LoginFormik} from "./LoginFormik";
 
 export const Login = () => {
-    return (
-        <h1>LOGIN</h1>
-    );
-};
+
+    return <div>
+        <h1>
+            Login
+        </h1>
+        <LoginFormik/>
+    </div>
+}
+
+

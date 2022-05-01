@@ -4,6 +4,7 @@ import {Button} from "../Button/Button";
 import {userType} from "./UsersContainer";
 import ava from '../../img/personal-user.png'
 import {NavLink} from "react-router-dom";
+import {UserSearchForm} from "./UsersSearchForm";
 
 type UsersPropsType = {
     users: userType[]
@@ -34,6 +35,7 @@ export const Users = (props: UsersPropsType) => {
     }
     return (
         <div>
+            <UserSearchForm/>
             {pages.map((el, i) => {
                 const setCurrentPageHandler = () => {
                     props.setCurrentPage(el)
@@ -90,4 +92,7 @@ export const Users = (props: UsersPropsType) => {
         </div>
     );
 };
+
+
+
 

@@ -12,6 +12,7 @@ import {
 } from "../../redux/users-reducer";
 import {Preloader} from "../common/Preloader";
 import {UserAPI} from "../api/Api";
+import {Navigate} from "react-router-dom";
 
 
 export type userType = {
@@ -32,7 +33,7 @@ export const UsersContainer = () => {
     const pageSize = useSelector<AppRootReducerType, number>(state => state.users.pageSize)
     const totalUsersCount = useSelector<AppRootReducerType, number>(state => state.users.totalUsersCount)
     const currentPage = useSelector<AppRootReducerType, number>(state => state.users.currentPage)
-
+    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.isAuth)
     const users = useSelector<AppRootReducerType, userType[]>(state => {
         return state.users.items
     })
@@ -47,11 +48,11 @@ export const UsersContainer = () => {
     }, [currentPage])
 
     const addUnFollow = (id: number) => {
-       dispatch(changeUNFollowCreator(id))
+        dispatch(changeUNFollowCreator(id))
 
     }
     const addFollow = (id: number) => {
-     dispatch(changeFollowCreator(id))
+        dispatch(changeFollowCreator(id))
 
     }
     const setCurrentPage = (currentPage: number) => {
@@ -59,7 +60,7 @@ export const UsersContainer = () => {
         dispatch(changeCurrentPageAC(currentPage))
     }
 
-
+    if (!auth) return <Navigate to="/login"/>
     return (
         <div>
             {isFetching ? <Preloader/> : null}

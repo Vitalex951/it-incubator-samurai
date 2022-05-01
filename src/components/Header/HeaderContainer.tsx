@@ -7,7 +7,6 @@ import {AuthType, AuthUserCreator} from "../../redux/auth-reducer";
 export const HeaderContainer = () => {
     const dispatch = useDispatch()
     let mainUser = useSelector<AppRootReducerType, AuthType>(state => state.auth)
-    console.log(mainUser.id)
     useEffect(() => {
         dispatch(AuthUserCreator())
     }, [mainUser.isAuth])
