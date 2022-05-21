@@ -1,30 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogsItem";
 import {DialogsType, UsersType} from "../../redux/store";
-import {Input} from "../Input/Input";
-import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootReducerType} from "../store/store";
 import {sendMessage} from "../../redux/dialogs-reducer";
 import Message from "./Message/Message";
 import {v1} from "uuid";
-import {Login} from "../login/Login";
-import {Navigate, Route} from "react-router-dom";
-
-type DialogsPropsType = {
-    // state: DialogsPageType
-    // dispatch: (type: ActionsTypes) => void
-}
+import {Navigate} from "react-router-dom";
+import {AddMessageForm, messageType} from "./AddMessageForm";
 
 const DialogsContainer = () => {
 
-
     const users = useSelector<AppRootReducerType, Array<UsersType>>(state => state.dialogs.users)
-    const [title, setTitle] = useState<string>('')
+    // const [title, setTitle] = useState<string>('')
     const dialogs = useSelector<AppRootReducerType, Array<DialogsType>>(state => state.dialogs.dialogs)
     const dispatch = useDispatch()
-    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.isAuth)
+    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.data.isAuth)
 
     const dialogsElements = users.map((t, i) => <DialogItem
         name={t.name}
@@ -36,9 +28,9 @@ const DialogsContainer = () => {
         message={m.message}
         key={v1()}/>)
 
-    const onclickAddNewBody = () => {
-        dispatch(sendMessage(title))
-        setTitle('')
+    const onclickAddNewBody = (values: messageType) => {
+
+        dispatch(sendMessage(values.message))
     }
 
     if (!auth) return <Navigate to="/login"/>
@@ -53,12 +45,14 @@ const DialogsContainer = () => {
                 {messagesElements}
                 <div>
                     <div>
-                        <Input value={title}
-                               setValue={setTitle}
-                               onClickAdd={onclickAddNewBody}/>
-                    </div>
-                    <div>
-                        <Button disabled={false} callback={onclickAddNewBody} name={'add'}/>
+
+                        <AddMessageForm callback={onclickAddNewBody}/>
+                    {/*    <Input value={title}*/}
+                    {/*           setValue={setTitle}*/}
+                    {/*           onClickAdd={onclickAddNewBody}/>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <Button disabled={false} callback={onclickAddNewBody} name={'add'}/>*/}
                     </div>
                 </div>
             </div>

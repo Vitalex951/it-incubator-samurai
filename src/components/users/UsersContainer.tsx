@@ -33,7 +33,7 @@ export const UsersContainer = () => {
     const pageSize = useSelector<AppRootReducerType, number>(state => state.users.pageSize)
     const totalUsersCount = useSelector<AppRootReducerType, number>(state => state.users.totalUsersCount)
     const currentPage = useSelector<AppRootReducerType, number>(state => state.users.currentPage)
-    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.isAuth)
+    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.data.isAuth)
     const users = useSelector<AppRootReducerType, userType[]>(state => {
         return state.users.items
     })

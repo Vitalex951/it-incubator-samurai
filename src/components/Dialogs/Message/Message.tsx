@@ -7,8 +7,15 @@ type MessageItemType = {
 
 const Message = (props: MessageItemType) => {
     return (
-        <div className={s.dialog}>{props.message}</div>
+        <>
+            <div className={s.dialog}>{props.message}</div>
+        </>
     )
 }
 
 export default Message;
+
+
+
+
+

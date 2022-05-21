@@ -1,45 +1,130 @@
-import {useDispatch} from "react-redux";
-import {AuthUserRegistrationCreator} from "../../redux/auth-reducer";
-import {Field, Form, Formik} from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import React from "react";
+import * as Yup from 'yup'
+import {useSelector} from "react-redux";
+import {AppRootReducerType} from "../store/store";
 
-export const userSearchFormValidete = (values: any) => {
-    const errors = {};
-    return errors;
+type LoginFormikType = {
+    callback: (values: valuesFromFormikType, setSubmitting: (isSubmitting: boolean) => void) => void
 }
-export type userSearchFormObjectType = {
-    term: string,
-    email?: '' | string
-    Password?: '' | string,
-    RememberMe?: boolean
+export type setSubmitting = (isSubmitting: boolean) => void
+export type valuesFromFormikType = {
+    email: string
+    password: string
+    rememberMe: boolean
 }
-export const LoginFormik = () => {
-    const dispatch = useDispatch()
-    const submit = (values: userSearchFormObjectType, {setSubmitting}: {
-        setSubmitting: (isSubmitting: boolean) => void
-    }) => {
-        if (values.email && values.Password)
-            dispatch(AuthUserRegistrationCreator(values.email, values.Password, values.RememberMe))
-        setSubmitting(false)
+export const LoginFormik = (props: LoginFormikType) => {
+    const err = useSelector<AppRootReducerType, string>(state => state.auth.messages)
+    const initialState: valuesFromFormikType = {
+        email: '',
+        password: '',
+        rememberMe: false
     }
+
+    const validationSchema = Yup.object({
+        email: Yup.string().required('Required').email('Invalid email format'),
+        password: Yup.string().required('Required').min(5, 'Minimum 5 symbols'),
+    })
+
+    const submit = (values: valuesFromFormikType, {setSubmitting, resetForm}: {
+        setSubmitting: setSubmitting, resetForm: () => void
+    }) => {
+        props.callback(values, setSubmitting)
+    }
+
     return <Formik
-        initialValues={{term: ''}}
-        validate={userSearchFormValidete}
+        initialValues={initialState}
+        validationSchema={validationSchema}
         onSubmit={submit}
     >
         {({isSubmitting}) => (
             <Form>
                 <Field placeholder="Login" type="text" name="email"/>
+                <ErrorMessage name="email" component="div"/>
                 <div>
-                    <Field placeholder="Password" type="password" name="Password"/>
+                    <Field placeholder="Password" type="password" name="password" autoComplete="on"/>
+                    <ErrorMessage name="password" component="div"/>
                 </div>
                 <div>
-                    <Field placeholder="Remember me" type="checkbox" name="RememberMe"/>
+                    <Field placeholder="Remember me" type="checkbox" name="remember Me"/>
+                    <span>Remember me</span>
                 </div>
                 <button type="submit" disabled={isSubmitting}>
                     Login
                 </button>
+                {err}
             </Form>
         )}
     </Formik>
 }
+
+//
+//
+//
+// type InitialValuesType = {
+//     email: string
+//     password: string
+//     rememberMe: boolean
+// }
+// type LoginType = {
+//     login: (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void) => void
+//     isAuth: boolean
+// }
+// type MapStateTotPropsType = {
+//     isAuth: boolean
+// }
+// const Login = (props: LoginType) => {
+//     const initialValues: InitialValuesType = {
+//         email: '',
+//         password: '',
+//         rememberMe: false
+//     }
+//     const validationSchema = Yup.object({
+//         email: Yup.string().required('Required').email('Invalid email format'),
+//         password: Yup.string().required('Required').min(5, 'Minimum 5 symbols'),
+//     })
+//     const onSubmit = (values: InitialValuesType, {setSubmitting, setStatus}: FormikHelpers<InitialValuesType>) => {
+//         props.login(values.email, values.password, values.rememberMe, setStatus)
+//         setSubmitting(false)
+//     }
+//
+//     if (props.isAuth) {
+//         return <Navigate to={"/profile"}/>
+//     }
+//
+//     return (
+//         <div>
+//             <h1>LOG IN</h1>
+//             <Formik initialValues={initialValues}
+//                     validationSchema={validationSchema}
+//                     validateOnBlur
+//                     onSubmit={onSubmit}>
+//                 {(formik: FormikProps<FormikValues>) => {
+//                     const {isSubmitting, status} = formik
+//                     return (
+//                         <Form>
+//                             <div>
+//                                 {/*<FormControl control={'input'} name={'email'} placeholder={'email'}/>*/}
+//                             </div>
+//                             <div>
+//                                 {/*<FormControl control={'password'} name={'password'} placeholder={'password'}/>*/}
+//                             </div>
+//                             <div style={{marginBottom: '8px'}}>
+//                                 <Field type={'checkbox'} name={'rememberMe'} id={'rememberMe'}/>
+//                                 <label htmlFor={'rememberMe'}>remember me</label>
+//                             </div>
+//                             <div>
+//                                 <button type={'submit'} disabled={isSubmitting}>
+//                                     Login
+//                                 </button>
+//                             </div>
+//                             {status
+//                                 ? <span style={{color: 'red'}}>Your email or password is incorrect</span>
+//                                 : <span style={{margin: '8px', width: '300px'}}/>}
+//                         </Form>
+//                     )
+//                 }}
+//
+//             </Formik>
+//         </div>
+//     );

@@ -1,73 +1,80 @@
 import React, {useEffect, useState} from 'react';
-import MyPosts from "../MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootReducerType} from "../../store/store";
 import {
-    getStatus,
+    changeIsStatusAC,
+    getStatusMainUser, getStatusUser,
     PostDataType,
     ProfileType,
     showProfileUser,
+    StatusType,
     updateStatus
 } from "../../../redux/Profile-reducer";
 import {Navigate, useParams} from "react-router-dom";
-import {ProfileApi} from "../../api/Api";
+import {MyPosts} from "../MyPosts/MyPosts";
 
 
 export const ProfileContainer = () => {
 
     const posts = useSelector<AppRootReducerType, Array<PostDataType>>(state => state.profile.postData)
     const profile = useSelector<AppRootReducerType, ProfileType | null>(state => state.profile.profile)
-    const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.isAuth)
-    const status = useSelector<AppRootReducerType, string | null>(state => state.profile.status)
-    const myID = useSelector<AppRootReducerType, number | null>(state => state.auth.id)
+    const auth = useSelector<AppRootReducerType, string | null>(state => state.auth.data.email)
+    const statusMainUser = useSelector<AppRootReducerType, string | null>(state => state.profile.statusMainUser)
+    const statusUser = useSelector<AppRootReducerType, string | null>(state => state.profile.statusUser)
+    const myID = useSelector<AppRootReducerType, number | null>(state => state.auth.data.id)
+    const isStatus = useSelector<AppRootReducerType, StatusType>(state => state.profile.isStatus)
 
     const dispatch = useDispatch()
 
-    let params = useParams()
+    const params = useParams()
+
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [value, setValue] = useState<string>('')
+    const [valueMainUser, setValueMainUser] = useState<string>('')
 
     const onDoubleClick = (editMode: boolean) => {
         setEditMode(editMode)
     }
     const addStatus = () => {
-        dispatch(updateStatus(value))
+        dispatch(updateStatus(valueMainUser))
         setEditMode(false)
     }
 
     //set in input my status
     useEffect(() => {
-        if (myID)
-            getStatus(myID.toString())
-        if (status)
-        setValue(status)
-    }, [status])
+        if (myID) {
+            getStatusMainUser(myID.toString())
+            if (statusMainUser)
+                setValueMainUser(statusMainUser)
+        }
+    }, [statusMainUser])
 
     //show status newUser
     useEffect(() => {
         dispatch(showProfileUser(params.id))
         if (params.id) {
-            dispatch(getStatus(params.id))
+            dispatch(getStatusUser(params.id))
+            dispatch(changeIsStatusAC("user"))
         } else if (myID) {
-            dispatch(getStatus(myID.toString()))
+            dispatch(getStatusMainUser(myID.toString()))
+            dispatch(changeIsStatusAC("mainUser"))
         }
     }, [params.id])
-        useEffect(() => {
 
-        })
-    // if (!auth) return <Navigate to="/login"/>
+    if (!auth) return <Navigate to="/login"/>
+
 
     return (
         <div>
             <ProfileInfo
+                isStatus={isStatus}
                 profile={profile}
-                status={status}
-                value={value}
+                valueMainUser={valueMainUser}
                 onDoubleClick={onDoubleClick}
                 editMode={editMode}
-                setValue={setValue}
+                setValueMainUser={setValueMainUser}
                 addStatus={addStatus}
+                valueUser={statusUser}
             />
             <MyPosts posts={posts}/>
         </div>
