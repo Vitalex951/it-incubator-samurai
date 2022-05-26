@@ -1,4 +1,4 @@
-import {combineReducers, createStore, applyMiddleware} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {dialogsReducer, DialogsReducerType} from "../../redux/dialogs-reducer";
 import {ProfileActionType, profileReducer} from "../../redux/Profile-reducer";
 import {usersReducer} from "../../redux/users-reducer";
@@ -14,7 +14,6 @@ const rootReducer = combineReducers({
     auth: authReducer,
     appStatus: appReducer
 })
-
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 export type AppActionsType =DialogsReducerType | AuthReducerType | ProfileActionType | setAppStatusACType
