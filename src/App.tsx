@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import NavBar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import {ProfileContainer} from "./components/Profile/ProfileInfo/ProfileContainer";
 
 import {UsersContainer} from "./components/users/UsersContainer";
@@ -17,7 +17,7 @@ function App() {
     const preloader = useSelector<AppRootReducerType, boolean>(state => state.appStatus.status)
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className={'app-wrapper'}>
                 <HeaderContainer/>
                 <NavBar/>
@@ -38,7 +38,7 @@ function App() {
                         </Routes>
                     </div>}
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
