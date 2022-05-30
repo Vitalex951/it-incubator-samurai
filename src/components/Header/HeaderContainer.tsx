@@ -10,7 +10,5 @@ export const HeaderContainer = () => {
     useEffect(() => {
         dispatch(AuthUser())
     }, [mainUser.isAuth])
-
     return <Header mainUser={mainUser}/>
-
 };
