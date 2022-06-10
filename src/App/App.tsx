@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import NavBar from "./components/Navbar/Navbar";
+import NavBar from "../components/Navbar/Navbar";
 import {HashRouter, Route, Routes} from "react-router-dom";
-import {ProfileContainer} from "./components/Profile/ProfileInfo/ProfileContainer";
+import {ProfileContainer} from "../components/Profile/ProfileInfo/ProfileContainer";
 
-import {UsersContainer} from "./components/users/UsersContainer";
-import {HeaderContainer} from "./components/Header/HeaderContainer";
-import {Login} from "./components/login/Login";
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+import {UsersContainer} from "../components/users/UsersContainer";
+import {HeaderContainer} from "../components/Header/HeaderContainer";
+import {Login} from "../components/login/Login";
+import DialogsContainer from '../components/Dialogs/DialogsContainer';
 import {useSelector} from "react-redux";
-import {AppRootReducerType} from "./components/store/store";
-import {Preloader} from "./components/common/Preloader";
+import {AppRootReducerType} from "../redux/store";
+import {Preloader} from "../components/common/Preloader";
 
 
 function App() {
@@ -18,8 +18,9 @@ function App() {
 
     return (
         <HashRouter>
+            <HeaderContainer/>
             <div className={'app-wrapper'}>
-                <HeaderContainer/>
+
                 <NavBar/>
                 {preloader ? <Preloader/>
                     : <div className={'app-wrapper-content'}>

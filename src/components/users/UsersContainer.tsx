@@ -1,17 +1,10 @@
 import React, {useEffect} from 'react';
 
-import {Users} from "./Users";
+import {Users} from "./User/Users";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../store/store";
-import {
-    changeCurrentPageAC,
-    changeFollowCreator, changeUNFollowCreator,
-    getUsersThunkCreator,
-    toggleisFollowingProgressAC,
-    unfollowAC
-} from "../../redux/users-reducer";
+import {AppRootReducerType} from "../../redux/store";
+import {changeCurrentPageAC, changeFollowTC, changeUNFollowTC, getUsersTC} from "../../redux/reducers/users-reducer";
 import {Preloader} from "../common/Preloader";
-import {UserAPI} from "../api/Api";
 import {Navigate} from "react-router-dom";
 
 
@@ -44,15 +37,15 @@ export const UsersContainer = () => {
 
 
     useEffect(() => {
-        dispatch(getUsersThunkCreator(currentPage, pageSize))
+        dispatch(getUsersTC(currentPage, pageSize))
     }, [currentPage])
 
     const addUnFollow = (id: number) => {
-        dispatch(changeUNFollowCreator(id))
+        dispatch(changeUNFollowTC(id))
 
     }
     const addFollow = (id: number) => {
-        dispatch(changeFollowCreator(id))
+        dispatch(changeFollowTC(id))
 
     }
     const setCurrentPage = (currentPage: number) => {

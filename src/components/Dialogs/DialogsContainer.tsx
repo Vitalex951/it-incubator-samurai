@@ -1,14 +1,14 @@
 import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogsItem/DialogsItem";
-import {DialogsType, UsersType} from "../../redux/store";
+import {DialogsType, UsersType} from "../trash/store";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../store/store";
-import {sendMessage} from "../../redux/dialogs-reducer";
+import {sendMessage} from "../../redux/reducers/dialogs-reducer";
 import Message from "./Message/Message";
 import {v1} from "uuid";
 import {Navigate} from "react-router-dom";
-import {AddMessageForm, messageType} from "./AddMessageForm";
+import {AddMessageForm, messageType} from "./Message/AddMessageForm";
+import {AppRootReducerType} from "../../redux/store";
 
 const DialogsContainer = () => {
 

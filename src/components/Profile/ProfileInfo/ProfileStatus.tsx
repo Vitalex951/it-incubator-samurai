@@ -1,6 +1,6 @@
 import React, {KeyboardEvent} from 'react';
 import {Input} from "../../Input/Input";
-import {StatusType} from "../../../redux/Profile-reducer";
+import {StatusType} from "../../../redux/reducers/Profile-reducer";
 
 type ProfileStatusPropsType = {
     editMode: boolean

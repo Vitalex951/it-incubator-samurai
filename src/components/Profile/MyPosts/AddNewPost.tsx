@@ -3,7 +3,7 @@ import React from "react";
 import * as Yup from 'yup'
 
 type AddPostFormPropsType = {
-    callback: (values: messageType) => void
+    callback: (value: string) => void
 }
 
 export type messageType = {
@@ -22,7 +22,7 @@ export const AddMPostForm = (props: AddPostFormPropsType) => {
     const submit = (values: messageType, {setSubmitting, resetForm}: {
         setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void
     }) => {
-        props.callback(values)
+        props.callback(values.post)
         setSubmitting(false)
         resetForm()
     }

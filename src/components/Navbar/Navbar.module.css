@@ -1,12 +1,96 @@
 .nav {
-    grid-area: n;
-    background-color: cornflowerblue;
+    width: 164px;
+    height: 294px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
 }
 
 .item {
-    color: white;
-}
-.active {
-    color: gold;
+    font-size: 15px;
+    font-weight: 600;
+    color: #eeedf8;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    /*background-color: hsla(0,0%,100%,.2);*/
+    /*border-top-left-radius: 20px;*/
+    /*border-bottom-left-radius: 20px;*/
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
+.active {
+    /*background-color: hsla(0, 0%, 100%, .2);*/
+    font-size: 15px;
+    font-weight: 600;
+    color: #eeedf8;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: hsla(0,0%,100%,.2);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+:root {
+    --d: 2500ms;
+    --angle: 90deg;
+    --gradX: 100%;
+    --gradY: 50%;
+    --c1: rgba(168, 239, 255, 1);
+    --c2: rgba(168, 239, 255, 0.1);
+}
+
+.box {
+    /*font-size: 3vw;*/
+    /*margin: max(1rem, 3vw);*/
+    border: 0.35rem solid;
+    border-radius: 10% / 50%;
+    /*padding: 3vw;*/
+    border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.1turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 30;
+    animation: borderRotate var(--d) linear infinite forwards;
+}
+
+.box:nth-child(2) {
+    border-image: radial-gradient(ellipse at var(--gradX) var(--gradY), var(--c1), var(--c1) 10%, var(--c2) 40%) 30;
+    animation: borderRadial var(--d) linear infinite forwards;
+}
+
+@keyframes borderRotate {
+    100% {
+        --angle: 420deg;
+    }
+}
+
+@keyframes borderRadial {
+    20% {
+        --gradX: 100%;
+        --gradY: 50%;
+    }
+    40% {
+        --gradX: 100%;
+        --gradY: 100%;
+    }
+    60% {
+        --gradX: 50%;
+        --gradY: 100%;
+    }
+    80% {
+        --gradX: 0%;
+        --gradY: 50%;
+    }
+    100% {
+        --gradX: 50%;
+        --gradY: 0%;
+    }
+}

@@ -1,12 +1,92 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:400");
+
 .header {
-    grid-area: h;
-    background-color: green;
+    width: 100%;
+    margin: 0;
+    background-color: #fff;
+    height: 60px;
 }
+
+.wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.2);
+   height: 60px;
+}
+
 header img {
-    width: 80px;
+    width: 60px;
+    height: 60px;
+}
+.textSpan {
+    text-align: c;
 }
 
 .loginBlock {
     float: right;
     color: white;
+    height: 100%;
 }
+
+.loginBlock button {
+    padding: 5px 22px;
+    border-radius: 4px;
+    line-height: inherit;
+    color: #fff;
+    background-color: #6384e9;
+    text-align: center;
+    margin: 15px 0 10px 5px;
+}
+
+.loginUser {
+    min-height: 60px;
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    width: 33px;
+    height: 33px;
+}
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 90deg;
+    inherits: true;
+}
+
+@property --gradX {
+    syntax: '<percentage>';
+    initial-value: 50%;
+    inherits: true;
+}
+
+@property --gradY {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: true;
+}
+
+body {
+    /*font-family: Raleway, sans-serif;*/
+    /*text-align: center;*/
+    /*margin: 0;*/
+    /*padding: 1rem;*/
+    /*background-color: rgba(10, 12, 18, 1);*/
+    /*color: white;*/
+    /*min-height: 100vh;*/
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+/*p {*/
+/*    margin: 0;*/
+/*}*/
+
+

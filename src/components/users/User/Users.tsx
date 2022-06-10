@@ -1,10 +1,10 @@
 import React from 'react';
-import s from './Users.module.css'
-import {Button} from "../Button/Button";
-import {userType} from "./UsersContainer";
-import ava from '../../img/personal-user.png'
+import s from './User.module.css'
+import {Button} from "../../Button/Button";
+import {userType} from "../UsersContainer";
+import ava from '../../../img/personal-user.png'
 import {NavLink} from "react-router-dom";
-import {UserSearchForm} from "./UsersSearchForm";
+import Paginator from "../Paginator/Paginator";
 
 type UsersPropsType = {
     users: userType[]
@@ -16,34 +16,31 @@ type UsersPropsType = {
     setCurrentPage: (el: number) => void
     isFetching: boolean
     followingInProgress: number[]
-
-
 }
 
 export const Users = (props: UsersPropsType) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
-    let pages = []
-    for (let i = 1; i <= 10; i++) {
-        pages.push(i)
-    }
-    if (props.currentPage > 6) {
-        pages = []
-        for (let i = props.currentPage - 5; i < props.currentPage + 5; i++) {
-            pages.push(i)
-        }
-    }
+    // let pages = []
+    // for (let i = 1; i <= 10; i++) {
+    //     pages.push(i)
+    // }
+    // if (props.currentPage > 6) {
+    //     pages = []
+    //     for (let i = props.currentPage - 5; i < props.currentPage + 5; i++) {
+    //         pages.push(i)
+    //     }
+    // }
     return (
         <div>
-            <UserSearchForm/>
-            {pages.map((el, i) => {
-                const setCurrentPageHandler = () => {
-                    props.setCurrentPage(el)
-                }
-                return <span key={i}
-                             onClick={setCurrentPageHandler}
-                             className={el === props.currentPage ? s.selectedPage : ''}>{el}</span>
-            })}
+            <Paginator setCurrentPage={props.setCurrentPage} totalUsersCount={props.totalUsersCount}/>
+            {/*{pages.map((el, i) => {*/}
+            {/*    const setCurrentPageHandler = () => {*/}
+            {/*        props.setCurrentPage(el)*/}
+            {/*    }*/}
+            {/*    return <span key={i}*/}
+            {/*                 onClick={setCurrentPageHandler}*/}
+            {/*                 className={el === props.currentPage ? s.selectedPage : ''}>{el}</span>*/}
+            {/*})}*/}
             {
                 props.users.map(el => {
                     const followHandler = () => {
@@ -92,7 +89,6 @@ export const Users = (props: UsersPropsType) => {
         </div>
     );
 };
-
 
 
 

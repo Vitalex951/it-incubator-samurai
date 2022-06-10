@@ -1,9 +1,10 @@
 import React from 'react';
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
-import ava from '../../img/saab.jpg'
-import {AuthLoginOut, AuthUser} from "../../redux/auth-reducer";
+import ava from '../../img/avaHeader.png'
+import {AuthLoginOut, AuthUser} from "../../redux/reducers/auth-reducer";
 import {useDispatch} from "react-redux";
+import avchik from '../../img/defaultPhoto.png'
 
 type HeaderPropsType = {
     mainUser: AuthUser
@@ -13,23 +14,29 @@ const Header = (props: HeaderPropsType) => {
     const dispathc = useDispatch()
     const logOutHandler = () => dispathc(AuthLoginOut())
     return <header className={s.header}>
-        <img src={ava}/>
+        <div className={s.wrapper}>
 
-        <div className={s.loginBlock}>
+            <img src={ava}/>
 
-            {props.mainUser.isAuth
-                ? <div>
-                    {props.mainUser.login}
-                    <button onClick={logOutHandler}>Login Out</button>
-                </div>
 
-                : <NavLink to="/login" className={navData => navData.isActive ? s.active : s.item}>
-                    Login
-                </NavLink>
-            }
+            <div className={s.loginBlock}>
 
+                {props.mainUser.isAuth
+                    ? <div className={s.loginUser}>
+                        <img className={s.icon} src={avchik}/>
+                        {props.mainUser.login}
+                        <button className={s.logout} onClick={logOutHandler}>Login Out</button>
+                    </div>
+
+                    : <NavLink to="/login" className={navData => navData.isActive ? s.active : s.item}>
+                        <button>login</button>
+                    </NavLink>
+                }
+
+            </div>
         </div>
     </header>
+
 };
 
 export default Header;

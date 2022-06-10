@@ -2,7 +2,8 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import React from "react";
 import * as Yup from 'yup'
 import {useSelector} from "react-redux";
-import {AppRootReducerType} from "../store/store";
+import {AppRootReducerType} from "../../../redux/store";
+import style from "./LoginPage.module.css";
 
 type LoginFormikType = {
     callback: (values: valuesFromFormikType, setSubmitting: (isSubmitting: boolean) => void) => void
@@ -32,6 +33,7 @@ export const LoginFormik = (props: LoginFormikType) => {
         props.callback(values, setSubmitting)
     }
 
+
     return <Formik
         initialValues={initialState}
         validationSchema={validationSchema}
@@ -39,20 +41,35 @@ export const LoginFormik = (props: LoginFormikType) => {
     >
         {({isSubmitting}) => (
             <Form>
-                <Field placeholder="Login" type="text" name="email"/>
-                <ErrorMessage name="email" component="div"/>
-                <div>
-                    <Field placeholder="Password" type="password" name="password" autoComplete="on"/>
-                    <ErrorMessage name="password" component="div"/>
+                <div className={style.loginBox}>
+                    <h2>Login</h2>
+                    <div className={style.userBox}>
+                        <Field placeholder="Login" type="text" name="email"/>
+                        <div className={style.error}>
+                            <ErrorMessage name="email" component="div"/>
+                        </div>
+                    </div>
+                    <div className={style.userBox}>
+                        <Field placeholder="Password" type="password" name="password" autoComplete="on"/>
+                        <div className={style.error}>
+                            <ErrorMessage name="password" component="div"/>
+                        </div>
+                    </div>
+                    <div className={style.checkbox}>
+                        <Field placeholder="Remember me" type="checkbox" name="remember Me"/>
+                        <span>Remember me</span>
+                    </div>
+                    <button type="submit" disabled={isSubmitting}>
+                        Login
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div className={style.error}>
+                        {err}
+                    </div>
                 </div>
-                <div>
-                    <Field placeholder="Remember me" type="checkbox" name="remember Me"/>
-                    <span>Remember me</span>
-                </div>
-                <button type="submit" disabled={isSubmitting}>
-                    Login
-                </button>
-                {err}
             </Form>
         )}
     </Formik>

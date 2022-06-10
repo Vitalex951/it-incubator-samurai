@@ -2,7 +2,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import React from "react";
 import * as Yup from 'yup'
 import {useSelector} from "react-redux";
-import {AppRootReducerType} from "../store/store";
+import {AppRootReducerType} from "../../../redux/store";
 
 type AddMessageFormPropsType = {
     callback: (values: messageType) => void

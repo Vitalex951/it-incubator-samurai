@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './ProfileInfo.module.css'
-import {ProfileType, StatusType} from "../../../redux/Profile-reducer";
+import {ProfileType, StatusType} from "../../../redux/reducers/Profile-reducer";
 import {Preloader} from "../../common/Preloader";
 import ava from '../../../img/personal-user.png'
 import {ProfileStatus} from "./ProfileStatus";

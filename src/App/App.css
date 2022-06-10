@@ -1,0 +1,21 @@
+.app-wrapper {
+    margin: 0 auto;
+    max-width: 800px;
+    display: flex;
+
+
+}
+
+.app-wrapper-content {
+    grid-area: c;
+    background-color: lightblue;
+}
+
+body {
+    /*background: url("../img/bg.jpg") no-repeat center center fixed;*/
+    /*background-image: linear-gradient(165deg,#b5e0ff,#000437);*/
+    background-color: #193fb4;
+    min-height: 100vh;
+}
+
+

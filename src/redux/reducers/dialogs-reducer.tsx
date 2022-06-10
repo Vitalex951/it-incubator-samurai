@@ -1,19 +1,5 @@
 import {v1} from "uuid";
-import {DialogsType, UsersType} from "./store";
-
-export type DialogsReducerType = ReturnType<typeof sendMessage>
-
-export const sendMessage = (title: string) => {
-    return {
-        type: 'SEND-MESSAGE', title
-    } as const
-}
-
-export type DialogsPageType = {
-    dialogs: Array<DialogsType>
-    users: Array<UsersType>
-
-}
+import {DialogsType, UsersType} from "../../components/trash/store";
 
 const initialState = {
     dialogs: [
@@ -32,6 +18,7 @@ const initialState = {
     ],
 }
 
+//Reducer
 export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerType) => {
     switch (action.type) {
         case 'SEND-MESSAGE':
@@ -46,3 +33,23 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Di
             return state
     }
 }
+
+
+//AC
+export const sendMessage = (title: string) => {
+    return {
+        type: 'SEND-MESSAGE', title
+    } as const
+}
+
+
+//Thunks
+
+
+//Types
+export type DialogsPageType = {
+    dialogs: Array<DialogsType>
+    users: Array<UsersType>
+
+}
+export type DialogsReducerType = ReturnType<typeof sendMessage>

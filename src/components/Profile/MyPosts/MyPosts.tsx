@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Posts/Post";
-import {addPostAC, PostDataType} from "../../../redux/Profile-reducer";
+import {addPostAC, PostDataType} from "../../../redux/reducers/Profile-reducer";
 import {useDispatch} from "react-redux";
 import {AddMPostForm} from "./AddNewPost";
 
@@ -20,9 +20,9 @@ export const MyPosts = (props: MyPostsPropsType) => {
         key={m.id}
         id={m.id}/>)
 
-    const onClickAdd = () => {
-        dispatch(addPostAC(title))
-        setTitle('')
+    const onClickAdd = (value: string) => {
+        console.log(value)
+        dispatch(addPostAC(value))
     }
 
     return (

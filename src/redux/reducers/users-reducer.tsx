@@ -1,31 +1,8 @@
 import {Dispatch} from "redux";
-import {ProfileApi, UserAPI} from "../components/api/Api";
+import {UserAPI} from "../../components/api/UserAPI";
+import {ProfileApi} from "../../components/api/ProfileApi";
 
-
-export type usersType = {
-    items: userType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: number[]
-}
-
-type userType = {
-    "name": string
-    "id": number
-    "uniqueUrlName": any
-    "photos": {
-        "small": any
-        "large": any
-    },
-    "status": any
-    "followed": boolean
-
-}
-
-
-let initialState: usersType = {
+const initialState: usersType = {
     items: [
         {
             "name": "Fron",
@@ -47,6 +24,7 @@ let initialState: usersType = {
 
 }
 
+//Reducer
 export const usersReducer = (state: usersType = initialState, action: actionsType): usersType => {
     switch (action.type) {
         case "FOLLOW": {
@@ -76,6 +54,101 @@ export const usersReducer = (state: usersType = initialState, action: actionsTyp
     }
 };
 
+
+//AC
+export const followAC = (userID: number): followACType => {
+    return {
+        type: "FOLLOW",
+        userID
+    }
+}
+export const unfollowAC = (userID: number): unfollowACType => {
+    return {
+        type: "UNFOLLOW",
+        userID
+    }
+}
+export const getStateAC = (newState: userType[]): getStateACType => {
+    return {
+        type: "GET-STATE",
+        newState
+    }
+}
+export const changeCurrentPageAC = (currentPage: number): setStateACType => {
+    return {
+        type: "CHANGE-CURRENT-PAGE",
+        currentPage
+    }
+}
+export const toggleisFetchingAC = (isFetching: boolean): toggleisFetchingACType => {
+    return {
+        type: "TOGGLE_IS_FETCHING",
+        isFetching
+    }
+}
+export const toggleisFollowingProgressAC = (userID: number, isFetching: boolean): toggleisFollowingProgressAC => {
+    return {
+        type: "TOGGLE_IS_FOLLOWING_PROGRESS",
+        userID,
+        isFetching
+    }
+}
+
+
+//Thunks
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(toggleisFetchingAC(true))
+    ProfileApi.getUsers(currentPage, pageSize)
+        .then(response => {
+                dispatch(getStateAC(response.items))
+                dispatch(toggleisFetchingAC(false))
+            }
+        )
+}
+export const changeFollowTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(toggleisFollowingProgressAC(id, true))
+    UserAPI.followUser(id)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(followAC(id))
+            }
+            dispatch(toggleisFollowingProgressAC(id, false))
+
+        })
+}
+export const changeUNFollowTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(toggleisFollowingProgressAC(id, true))
+    UserAPI.unFollowUser(id)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(unfollowAC(id))
+            }
+            dispatch(toggleisFollowingProgressAC(id, false))
+        })
+}
+
+//Types
+export type usersType = {
+    items: userType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: number[]
+}
+
+type userType = {
+    "name": string
+    "id": number
+    "uniqueUrlName": any
+    "photos": {
+        "small": any
+        "large": any
+    },
+    "status": any
+    "followed": boolean
+}
+
 type actionsType =
     followACType
     | unfollowACType
@@ -88,103 +161,31 @@ type followACType = {
     type: "FOLLOW"
     userID: number
 }
-export const followAC = (userID: number): followACType => {
-    return {
-        type: "FOLLOW",
-        userID
-    }
-}
-
 type unfollowACType = {
     type: "UNFOLLOW"
     userID: number
 }
-export const unfollowAC = (userID: number): unfollowACType => {
-    return {
-        type: "UNFOLLOW",
-        userID
-    }
-}
-
 type getStateACType = {
     type: "GET-STATE",
     newState: userType[]
 }
-export const getStateAC = (newState: userType[]): getStateACType => {
-    return {
-        type: "GET-STATE",
-        newState
-    }
-}
-
 type setStateACType = {
     type: "CHANGE-CURRENT-PAGE"
     currentPage: number
 }
-export const changeCurrentPageAC = (currentPage: number): setStateACType => {
-    return {
-        type: "CHANGE-CURRENT-PAGE",
-        currentPage
-    }
-}
-
 type toggleisFetchingACType = {
     type: "TOGGLE_IS_FETCHING"
     isFetching: boolean
 }
-export const toggleisFetchingAC = (isFetching: boolean): toggleisFetchingACType => {
-    return {
-        type: "TOGGLE_IS_FETCHING",
-        isFetching
-    }
-}
-
 type toggleisFollowingProgressAC = {
     type: "TOGGLE_IS_FOLLOWING_PROGRESS"
     userID: number
     isFetching: boolean
 }
-export const toggleisFollowingProgressAC = (userID: number, isFetching: boolean): toggleisFollowingProgressAC => {
-    return {
-        type: "TOGGLE_IS_FOLLOWING_PROGRESS",
-        userID,
-        isFetching
-    }
-}
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
-    dispatch(toggleisFetchingAC(true))
-    ProfileApi.getUsers(currentPage, pageSize)
-        .then(response => {
-                dispatch(getStateAC(response.items))
-                dispatch(toggleisFetchingAC(false))
-            }
-        )
-}
 
-export const changeFollowCreator = (id: number) => (dispatch: Dispatch) => {
-    dispatch(toggleisFollowingProgressAC(id, true))
-    UserAPI.followUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(followAC(id))
-            }
-            dispatch(toggleisFollowingProgressAC(id, false))
 
-        })
-}
-
-export const changeUNFollowCreator = (id: number) => (dispatch: Dispatch) => {
-    dispatch(toggleisFollowingProgressAC(id, true))
-    UserAPI.unFollowUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(unfollowAC(id))
-            }
-            dispatch(toggleisFollowingProgressAC(id, false))
-        })
-}
 
 
 

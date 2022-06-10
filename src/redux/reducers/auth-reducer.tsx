@@ -1,20 +1,8 @@
-import {AuthApi} from "../components/api/Api";
-import {ThunkType} from "../components/store/store";
+import {AuthApi} from "../../components/api/AuthApi";
+import {ThunkType} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 
-
-export type AuthType = {
-    data: AuthUser
-    messages: string
-}
-export type AuthUser = {
-    id: null | number
-    email: null | string
-    login: null | string
-    isAuth: boolean
-}
-
-let initialState1: AuthType = {
+const initialState1: AuthType = {
     data: {
         id: null,
         email: null,
@@ -22,9 +10,9 @@ let initialState1: AuthType = {
         isAuth: false
     },
     messages: ''
-
 }
 
+//Reducer
 export const authReducer = (state: AuthType = initialState1, action: AuthReducerType): AuthType => {
     switch (action.type) {
 
@@ -40,8 +28,8 @@ export const authReducer = (state: AuthType = initialState1, action: AuthReducer
     }
 }
 
-export type AuthReducerType = ReturnType<typeof setUserDataAC>
 
+//AC
 export const setUserDataAC = (id: number | null, login: string | null, email: string | null, isAuth: boolean, messages: string = '') => {
     return {
         type: 'SET_USER_DATA', data: {
@@ -51,7 +39,7 @@ export const setUserDataAC = (id: number | null, login: string | null, email: st
 }
 
 
-//thunk
+//Thunks
 export const AuthUser = (): ThunkType => (dispatch) => {
     dispatch(setAppStatusAC(true))
     AuthApi.authMe()
@@ -89,3 +77,17 @@ export const AuthLoginOut = (): ThunkType => (dispatch) => {
         })
 }
 
+
+//Types
+export type AuthReducerType = ReturnType<typeof setUserDataAC>
+
+export type AuthType = {
+    data: AuthUser
+    messages: string
+}
+export type AuthUser = {
+    id: null | number
+    email: null | string
+    login: null | string
+    isAuth: boolean
+}

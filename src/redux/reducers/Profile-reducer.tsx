@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {v1} from "uuid";
-import {ProfileApi, UserAPI} from "../components/api/Api";
+import {ProfileApi} from "../../components/api/ProfileApi";
 
 
 export const initialState: StateType = {
@@ -32,9 +32,8 @@ export const initialState: StateType = {
     statusMainUser: '',
     statusUser: '',
     isStatus: "mainUser"
-
 }
-
+//Reducer
 export const profileReducer = (state: StateType = initialState, action: ProfileActionType): StateType => {
     switch (action.type) {
         case 'ADD-POST':
@@ -57,6 +56,7 @@ export const profileReducer = (state: StateType = initialState, action: ProfileA
     }
 };
 
+
 //AC
 export const addPostAC = (title: string) => {
     return {
@@ -64,7 +64,6 @@ export const addPostAC = (title: string) => {
         title
     } as const
 }
-
 export const setUserProfileAC = (profile: ProfileType) => {
     return {
         type: "SET-PROFILE",
@@ -122,8 +121,8 @@ export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     })
 }
 
-//Type
 
+//Types
 export type ProfileActionType = ProfileReducerACType
     | setUserProfileACType
     | setStatusMainUserACType
@@ -135,7 +134,6 @@ export type setStatusUserACType = ReturnType<typeof setStatusUserAC>
 export type setUserProfileACType = ReturnType<typeof setUserProfileAC>
 export type ProfileReducerACType = ReturnType<typeof addPostAC>
 export type ChangeIsStatusACType = ReturnType<typeof changeIsStatusAC>
-
 
 export type StateType = {
     postData: Array<PostDataType>

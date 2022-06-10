@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ProfileInfo from "./ProfileInfo";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../../store/store";
+import {AppRootReducerType} from "../../../redux/store";
 import {
     changeIsStatusAC,
     getStatusMainUser, getStatusUser,
@@ -10,9 +10,10 @@ import {
     showProfileUser,
     StatusType,
     updateStatus
-} from "../../../redux/Profile-reducer";
+} from "../../../redux/reducers/Profile-reducer";
 import {Navigate, useParams} from "react-router-dom";
 import {MyPosts} from "../MyPosts/MyPosts";
+import Test from "../../../test/Test";
 
 
 export const ProfileContainer = () => {
