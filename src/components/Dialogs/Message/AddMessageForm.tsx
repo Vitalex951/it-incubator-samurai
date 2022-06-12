@@ -1,8 +1,8 @@
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import React from "react";
-import * as Yup from 'yup'
-import {useSelector} from "react-redux";
-import {AppRootReducerType} from "../../../redux/store";
+import React, {ChangeEvent, useState} from "react";
+import {TextField} from "@mui/material";
+import Button from "@mui/material/Button";
+import s from './Dialogs.module.css'
+
 
 type AddMessageFormPropsType = {
     callback: (values: messageType) => void
@@ -12,36 +12,16 @@ export type messageType = {
     message: string
 }
 export const AddMessageForm = (props: AddMessageFormPropsType) => {
-
-    const initialState: messageType = {
-        message: ''
+    const [value, setValue] = useState<string>('')
+    const sendMessage = () => {
+        props.callback({message: value})
+        setValue('')
     }
-
-    const validationSchema = Yup.object({
-        message: Yup.string().required('Required'),
-    })
-
-    const submit = (values: messageType, {setSubmitting, resetForm}: {
-        setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void
-    }) => {
-        props.callback(values)
-        setSubmitting(false)
-        resetForm()
+    const changeValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
     }
-
-    return <Formik
-        initialValues={initialState}
-        validationSchema={validationSchema}
-        onSubmit={submit}
-    >
-        {({isSubmitting}) => (
-            <Form>
-                <Field placeholder="Message" type="text" name="message"/>
-                <ErrorMessage name="message" component="div"/>
-                <button type="submit" disabled={isSubmitting}>
-                    Send
-                </button>
-            </Form>
-        )}
-    </Formik>
+    return <div className={s.addMessage}>
+        <TextField onChange={changeValue} value={value} id="outlined-basic" label="Send message..." variant="outlined"/>
+        <Button onClick={sendMessage}>Send</Button>
+    </div>
 }

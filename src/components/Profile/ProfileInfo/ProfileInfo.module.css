@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@1,500&display=swap');
+
 .descriptionBlock {
     padding: 10px;
 }
@@ -5,4 +7,67 @@
 .descriptionBlock img {
     width: 200px;
     height: 200px;
+    border-radius: 50%;
+    margin: 10px;
 }
+
+.mainBlock {
+    display: flex;
+
+}
+
+.data {
+    width: 400px;
+}
+
+.fullName {
+    font-size: 25px;
+    font-weight: 600;
+    padding: 10px;
+    font-family: 'Josefin Slab', serif;
+    font-style: normal;
+}
+
+.info {
+    width: 150px;
+    color: #828282;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+.info span {
+    padding: 5px;
+}
+
+.infoContainer {
+    display: flex;
+    justify-content: left;
+}
+.infoDescription{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+.infoDescription span {
+    padding: 5px;
+}
+.infoContacts {
+    display: flex;
+    flex-direction: column;
+}
+.infoContacts span {
+    padding-left: 25px;
+
+}
+
+.descriptionContacts {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+}
+.descriptionContacts span {
+    padding-left: 25px;
+    min-height: 20px;
+}
+
+

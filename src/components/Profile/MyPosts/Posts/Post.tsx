@@ -1,18 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from "../MyPosts.module.css";
 import {PostDataType} from "../../../../redux/reducers/Profile-reducer";
+import scr from '../../../../img/scarlett-johansson.jpg'
+
 
 type MyPostsType = PostDataType
 
 const Post = (props: MyPostsType) => {
+
     return (
-        <div className={s.item}>
-            <img
-                src='https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/08/10-Best-Gaming-Team-Logos-and-How-to-Make-Your-Own-CurrentYear-image1-1.png'/>
-            {props.message}
-            <div>
-                <span>{props.likes} like</span>
+        <div>
+            <div className={s.item}>
+                <img
+                    src={scr}/>
+                <div>
+                    <h4>
+                        Scarlett Johansson
+                    </h4>
+                    <div style={{margin: '5px 0 0 10px'}}>   {props.message}</div>
+                </div>
+
             </div>
+            <hr/>
         </div>
     );
 };

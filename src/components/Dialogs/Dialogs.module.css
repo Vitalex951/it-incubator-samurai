@@ -1,6 +1,5 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+    display: flex;
 }
 
 .dialogsItem {
@@ -8,8 +7,21 @@
     color: white;
 }
 
+.dialogsItem h4 {
+    font-size: 28px;
+    margin: 0 0 10px 0;
+    text-shadow: 1px 1px 1px black;
+}
+
 .dialogsItem .active {
     color: gold;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
+.dialogs h3 {
+    font-size: 30px;
+    margin: 5px;
+    font-family: 'Lora', serif;
 }
 
 .messages {
@@ -17,5 +29,99 @@
 }
 
 .messages .messages {
-color: white;
+    color: white;
 }
+
+.dialogsContainer {
+    display: flex;
+    border: 1px solid;
+    border-radius: 20px;
+    margin: 10px;
+    width: 610px;
+    background-color: #bebebe;
+}
+
+.friends {
+    border: 1px solid black;
+    display: flex;
+    width: 200px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    margin: 0 0 10px 0;
+    padding: 10px;
+}
+
+.friends img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.friends h5 {
+    font-size: 20px;
+    margin: 0 0 0 10px;
+}
+
+.friends span {
+    margin-left: 5px;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.message {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid black;
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.message h5 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.message img {
+    width: 60px;
+    height: 60px;
+}
+
+.messageContainer {
+    display: flex;
+    align-items: flex-end;
+    min-height: 50px;
+}
+
+.text {
+    border: 1px solid;
+    background-color: rgba(190, 190, 190, 0.6);
+    border-radius: 10px;
+    padding: 8px;
+    /*min-height: 65px;*/
+    margin: 5px 30px 5px 5px;
+}
+
+.addMessage {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.messageContainerMy {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.textMy {
+    border: 1px solid;
+    background-color: rgba(190, 190, 190, 0.6);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px 5px 5px 30px;
+}
+
+
+

@@ -1,30 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import ProfileInfo from "./ProfileInfo";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../../../redux/store";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "../../redux/store";
 import {
     changeIsStatusAC,
-    getStatusMainUser, getStatusUser,
-    PostDataType,
-    ProfileType,
+    getStatusMainUser,
+    getStatusUser,
     showProfileUser,
-    StatusType,
     updateStatus
-} from "../../../redux/reducers/Profile-reducer";
+} from "../../redux/reducers/Profile-reducer";
 import {Navigate, useParams} from "react-router-dom";
-import {MyPosts} from "../MyPosts/MyPosts";
-import Test from "../../../test/Test";
+import {MyPosts} from "./MyPosts/MyPosts";
 
 
 export const ProfileContainer = () => {
 
-    const posts = useSelector<AppRootReducerType, Array<PostDataType>>(state => state.profile.postData)
-    const profile = useSelector<AppRootReducerType, ProfileType | null>(state => state.profile.profile)
-    const auth = useSelector<AppRootReducerType, string | null>(state => state.auth.data.email)
-    const statusMainUser = useSelector<AppRootReducerType, string | null>(state => state.profile.statusMainUser)
-    const statusUser = useSelector<AppRootReducerType, string | null>(state => state.profile.statusUser)
-    const myID = useSelector<AppRootReducerType, number | null>(state => state.auth.data.id)
-    const isStatus = useSelector<AppRootReducerType, StatusType>(state => state.profile.isStatus)
+    const posts = useAppSelector(state => state.profile.postData)
+    const profile = useAppSelector(state => state.profile.profile)
+    const auth = useAppSelector(state => state.auth.data.email)
+    const statusMainUser = useAppSelector(state => state.profile.statusMainUser)
+    const statusUser = useAppSelector(state => state.profile.statusUser)
+    const myID = useAppSelector(state => state.auth.data.id)
+    const isStatus = useAppSelector(state => state.profile.isStatus)
 
     const dispatch = useDispatch()
 

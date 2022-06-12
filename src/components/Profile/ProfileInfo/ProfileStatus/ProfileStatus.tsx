@@ -1,6 +1,7 @@
-import React, {KeyboardEvent} from 'react';
-import {Input} from "../../Input/Input";
-import {StatusType} from "../../../redux/reducers/Profile-reducer";
+import React from 'react';
+import {Input} from "../../../Input/Input";
+import {StatusType} from "../../../../redux/reducers/Profile-reducer";
+import s from './ProfileStatus.module.css'
 
 type ProfileStatusPropsType = {
     editMode: boolean
@@ -17,10 +18,6 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
     const onDoubleClickHandler = () => {
         props.onDoubleClick(true)
     }
-    //test
-    // const xxx = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     console.log(e.key)
-    // }
 
 
     return (
@@ -28,19 +25,19 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
 
             {props.isStatus === "mainUser"
             &&
-            (props.editMode ? <div>
+            (props.editMode ? <div className={s.status}>
                     <Input
+                        className={s.status}
                         autoFocus={true}
                         value={props.valueMainUser}
                         setValue={props.setValueMainUser}
                         onClickAdd={props.addStatus}
                         onBlur={props.addStatus}
-                        // onKey={xxx}
                     />
                 </div>
                 : <div>
                     <span
-                        onDoubleClick={onDoubleClickHandler}>{props.valueMainUser ? props.valueMainUser : 'no status'}</span>
+                        onDoubleClick={onDoubleClickHandler}>{props.valueMainUser ? props.valueMainUser : 'set status'}</span>
                 </div>)}
 
 

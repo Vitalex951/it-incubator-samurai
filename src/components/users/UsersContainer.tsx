@@ -2,10 +2,13 @@ import React, {useEffect} from 'react';
 
 import {Users} from "./User/Users";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootReducerType} from "../../redux/store";
-import {changeCurrentPageAC, changeFollowTC, changeUNFollowTC, getUsersTC} from "../../redux/reducers/users-reducer";
-import {Preloader} from "../common/Preloader";
+import {AppRootReducerType, useAppSelector} from "../../redux/store";
+import {changeFollowTC, changeUNFollowTC, getUsersTC} from "../../redux/reducers/users-reducer";
 import {Navigate} from "react-router-dom";
+import {CircularProgress} from "@mui/material";
+import Paginator from "./Paginator/Paginator";
+import s from './UsersContainer.module.css'
+
 
 
 export type userType = {
@@ -24,7 +27,6 @@ type photosType = {
 export const UsersContainer = () => {
 
     const pageSize = useSelector<AppRootReducerType, number>(state => state.users.pageSize)
-    const totalUsersCount = useSelector<AppRootReducerType, number>(state => state.users.totalUsersCount)
     const currentPage = useSelector<AppRootReducerType, number>(state => state.users.currentPage)
     const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.data.isAuth)
     const users = useSelector<AppRootReducerType, userType[]>(state => {
@@ -48,27 +50,23 @@ export const UsersContainer = () => {
         dispatch(changeFollowTC(id))
 
     }
-    const setCurrentPage = (currentPage: number) => {
-        // dispatch(getUsersThunkCreator(currentPage, pageSize))
-        dispatch(changeCurrentPageAC(currentPage))
-    }
+
+    const statusUser = useAppSelector(state => state.appStatus.statusUser)
 
     if (!auth) return <Navigate to="/login"/>
-    return (
-        <div>
-            {isFetching ? <Preloader/> : null}
-            <Users currentPage={currentPage}
-                   users={users}
-                   pageSize={pageSize}
-                   totalUsersCount={totalUsersCount}
-                   addUnFollow={addUnFollow}
-                   addFollow={addFollow}
-                   setCurrentPage={setCurrentPage}
-                   isFetching={isFetching}
-                   followingInProgress={followingInProgress}
+    return <div className={s.container}>
+        <Paginator/>
+        {statusUser
+            ? <CircularProgress/>
+            : <Users
+                users={users}
+                pageSize={pageSize}
+                addUnFollow={addUnFollow}
+                addFollow={addFollow}
+                isFetching={isFetching}
+                followingInProgress={followingInProgress}
 
-            />
-        </div>
-    );
+            />}
+    </div>
 };
 

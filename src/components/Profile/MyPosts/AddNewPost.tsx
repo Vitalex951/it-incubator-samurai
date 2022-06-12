@@ -1,6 +1,7 @@
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import React from "react";
-import * as Yup from 'yup'
+import React, {ChangeEvent, useState} from "react";
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button';
+import s from './MyPosts.module.css'
 
 type AddPostFormPropsType = {
     callback: (value: string) => void
@@ -10,36 +11,27 @@ export type messageType = {
     post: string
 }
 export const AddMPostForm = (props: AddPostFormPropsType) => {
+    const [value, setValue] = useState<string>('')
 
-    const initialState: messageType = {
-        post: ''
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
+    const addPostClick = () => {
+        props.callback(value)
+        setValue('')
     }
 
-    const validationSchema = Yup.object({
-        post: Yup.string().required('Required'),
-    })
+    return <div className={s.addPostContainer}>
+        <TextField onChange={onChangeHandler} value={value} id="outlined-basic" label="What's new?" variant="outlined"/>
+        <Button variant="contained" size="small" onClick={addPostClick}
+                style={{
+                    width: '80px',
+                    height: '40px',
+                    fontSize: '12px',
+                    marginLeft: '10px'
 
-    const submit = (values: messageType, {setSubmitting, resetForm}: {
-        setSubmitting: (isSubmitting: boolean) => void, resetForm: () => void
-    }) => {
-        props.callback(values.post)
-        setSubmitting(false)
-        resetForm()
-    }
-
-    return <Formik
-        initialValues={initialState}
-        validationSchema={validationSchema}
-        onSubmit={submit}
-    >
-        {({isSubmitting}) => (
-            <Form>
-                <Field placeholder="What's new?" type="text" name="post"/>
-                <ErrorMessage name="post" component="div"/>
-                <button type="submit" disabled={isSubmitting}>
-                    Post
-                </button>
-            </Form>
-        )}
-    </Formik>
+                }}>
+            Post
+        </Button>
+    </div>
 }

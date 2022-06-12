@@ -5,6 +5,7 @@ import ava from '../../img/avaHeader.png'
 import {AuthLoginOut, AuthUser} from "../../redux/reducers/auth-reducer";
 import {useDispatch} from "react-redux";
 import avchik from '../../img/defaultPhoto.png'
+import {Preloader} from "../common/Preloader";
 
 type HeaderPropsType = {
     mainUser: AuthUser
@@ -15,12 +16,8 @@ const Header = (props: HeaderPropsType) => {
     const logOutHandler = () => dispathc(AuthLoginOut())
     return <header className={s.header}>
         <div className={s.wrapper}>
-
             <img src={ava}/>
-
-
             <div className={s.loginBlock}>
-
                 {props.mainUser.isAuth
                     ? <div className={s.loginUser}>
                         <img className={s.icon} src={avchik}/>
@@ -32,7 +29,6 @@ const Header = (props: HeaderPropsType) => {
                         <button>login</button>
                     </NavLink>
                 }
-
             </div>
         </div>
     </header>

@@ -46,10 +46,7 @@ let store: ScoreType = {
         },
         dialogsPage: {
             dialogs: [
-                {id: v1(), message: 'Hi'},
-                {id: v1(), message: 'How are you'},
-                {id: v1(), message: 'Good'},
-                {id: v1(), message: 'thx'}
+                {id: v1(), message: 'Hi, I am really busy'},
             ],
             users: [
                 {id: v1(), name: 'Vasya'},

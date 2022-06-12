@@ -6,7 +6,8 @@ import {ProfileApi} from "../../components/api/ProfileApi";
 export const initialState: StateType = {
     postData: [
         {id: v1(), message: 'Hi', likes: 3},
-        {id: v1(), message: 'How are you', likes: 5},
+        {id: v1(), message: 'How are you?', likes: 5},
+        {id: v1(), message: 'Are you free today?', likes: 5},
     ],
     profile: {
         "aboutMe": "я круто чувак 1001%",

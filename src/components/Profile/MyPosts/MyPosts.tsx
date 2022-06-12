@@ -10,10 +10,8 @@ type MyPostsPropsType = {
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
-    const [title, setTitle] = useState<string>('')
 
     const dispatch = useDispatch()
-
 
     const postsData = props.posts.map(m => <Post
         message={m.message} likes={m.likes}
@@ -21,7 +19,6 @@ export const MyPosts = (props: MyPostsPropsType) => {
         id={m.id}/>)
 
     const onClickAdd = (value: string) => {
-        console.log(value)
         dispatch(addPostAC(value))
     }
 
@@ -37,3 +34,4 @@ export const MyPosts = (props: MyPostsPropsType) => {
         </div>
     );
 };
+

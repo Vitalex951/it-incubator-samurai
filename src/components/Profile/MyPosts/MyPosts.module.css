@@ -1,9 +1,11 @@
 .item {
-    color: crimson;
+    margin: 0 0 10px 0;
+    display: flex;
 }
 .item img {
     width: 80px;
     border-radius: 50%;
+    margin: 5px;
 }
 
 .postsBlock {
@@ -12,4 +14,25 @@
 
 .posts {
     margin-top: 10px;
+    padding: 10px;
+}
+.addPostContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 500px;
+}
+.addPostContainer input {
+    width: 400px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
+
+.postsBlock h3 {
+    font-family: 'Lora', serif;
+    font-size: 25px;
+}
+.item h4 {
+    margin: 0;
+    font-size: 20px;
 }

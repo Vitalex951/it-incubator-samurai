@@ -8,13 +8,15 @@
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: lightblue;
+    background-color: #ecf1f5;
+    margin-top: 10px;
+    border-radius: 10px;
 }
 
 body {
     /*background: url("../img/bg.jpg") no-repeat center center fixed;*/
     /*background-image: linear-gradient(165deg,#b5e0ff,#000437);*/
-    background-color: #193fb4;
+    background: linear-gradient(to right, rgb(67, 206, 162), rgb(24, 90, 157));
     min-height: 100vh;
 }
 

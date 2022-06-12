@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {UserAPI} from "../../components/api/UserAPI";
 import {ProfileApi} from "../../components/api/ProfileApi";
+import {setAppStatusAC, setUserStatusAC} from "./app-reducer";
 
 const initialState: usersType = {
     items: [
@@ -16,12 +17,10 @@ const initialState: usersType = {
             "status": null
         },],
     totalUsersCount: 50,
-    pageSize: 5,
+    pageSize: 10,
     currentPage: 1,
     isFetching: true,
     followingInProgress: []
-
-
 }
 
 //Reducer
@@ -48,6 +47,8 @@ export const usersReducer = (state: usersType = initialState, action: actionsTyp
                 followingInProgress: action.isFetching ? [...state.followingInProgress, action.userID] : state.followingInProgress.filter(el => el !== action.userID)
             }
         }
+        case "CHANGE-USERS-COUNT":
+            return {...state, totalUsersCount: action.usersCount}
 
         default:
             return state
@@ -93,17 +94,29 @@ export const toggleisFollowingProgressAC = (userID: number, isFetching: boolean)
         isFetching
     }
 }
+export const changeUsersCountAC = (usersCount: number) => {
+    return {
+        type: "CHANGE-USERS-COUNT",
+        usersCount
+    } as const
+}
 
 
 //Thunks
 export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFetchingAC(true))
+    dispatch(setUserStatusAC(true))
     ProfileApi.getUsers(currentPage, pageSize)
         .then(response => {
                 dispatch(getStateAC(response.items))
                 dispatch(toggleisFetchingAC(false))
+                dispatch(changeUsersCountAC(response.totalCount))
+                console.log()
             }
         )
+        .finally(() => {
+            dispatch(setUserStatusAC(false))
+        })
 }
 export const changeFollowTC = (id: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFollowingProgressAC(id, true))
@@ -156,6 +169,7 @@ type actionsType =
     | setStateACType
     | toggleisFetchingACType
     | toggleisFollowingProgressAC
+    | ReturnType<typeof changeUsersCountAC>
 
 type followACType = {
     type: "FOLLOW"

@@ -19,3 +19,13 @@
 .messages .messages {
 color: white;
 }
+
+.addMessage {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.addMessage input {
+    height: 15px;
+}

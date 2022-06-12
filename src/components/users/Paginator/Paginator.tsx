@@ -1,19 +1,25 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {Pagination, Stack} from "@mui/material";
+import {changeCurrentPageAC} from "../../../redux/reducers/users-reducer";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "../../../redux/store";
 
-type PaginatorPropsType =  {
-    setCurrentPage: (el: number) => void
-    totalUsersCount: number
-}
+const Paginator = () => {
+    const dispatch = useDispatch()
 
-const Paginator = (props : PaginatorPropsType) => {
-        const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-            props.setCurrentPage(value);
-        };
+    const usersCount = useAppSelector(state => state.users.totalUsersCount)
+    const setCurrentPage = (event: ChangeEvent<unknown>, page: number) => {
+        dispatch(changeCurrentPageAC(page))
+    }
+
+    const totalUsersCount = Math.ceil(usersCount / 10)
+    const page = useAppSelector(state => state.users.currentPage)
+
     return (
-        <div>
+        <div >
             <Stack spacing={2}>
-                <Pagination count={props.totalUsersCount} onChange={handleChange} color={'primary'} size={'small'}/>
+                <Pagination count={totalUsersCount} page={page} onChange={setCurrentPage} color={'primary'}
+                            size={'small'}/>
             </Stack>
         </div>
     );

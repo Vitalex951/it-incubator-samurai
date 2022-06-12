@@ -1,55 +1,55 @@
 import React from 'react';
-import s from './User.module.css'
 import {Button} from "../../Button/Button";
 import {userType} from "../UsersContainer";
 import ava from '../../../img/personal-user.png'
 import {NavLink} from "react-router-dom";
-import Paginator from "../Paginator/Paginator";
+import s from './User.module.css';
+
+
 
 type UsersPropsType = {
     users: userType[]
-    totalUsersCount: number
     pageSize: number
-    currentPage: number
     addUnFollow: (id: number) => void
     addFollow: (id: number) => void
-    setCurrentPage: (el: number) => void
     isFetching: boolean
     followingInProgress: number[]
 }
 
 export const Users = (props: UsersPropsType) => {
-
-    // let pages = []
-    // for (let i = 1; i <= 10; i++) {
-    //     pages.push(i)
-    // }
-    // if (props.currentPage > 6) {
-    //     pages = []
-    //     for (let i = props.currentPage - 5; i < props.currentPage + 5; i++) {
-    //         pages.push(i)
-    //     }
-    // }
     return (
-        <div>
-            <Paginator setCurrentPage={props.setCurrentPage} totalUsersCount={props.totalUsersCount}/>
-            {/*{pages.map((el, i) => {*/}
-            {/*    const setCurrentPageHandler = () => {*/}
-            {/*        props.setCurrentPage(el)*/}
-            {/*    }*/}
-            {/*    return <span key={i}*/}
-            {/*                 onClick={setCurrentPageHandler}*/}
-            {/*                 className={el === props.currentPage ? s.selectedPage : ''}>{el}</span>*/}
-            {/*})}*/}
-            {
-                props.users.map(el => {
-                    const followHandler = () => {
-                        props.addFollow(el.id)
-                    }
-                    const unFollowHandler = () => {
-                        props.addUnFollow(el.id)
-                    }
-                    return <div key={el.id}>
+        <div className={s.container}>
+            <User users={props.users}
+                  pageSize={props.pageSize}
+                  addFollow={props.addFollow}
+                  addUnFollow={props.addUnFollow}
+                  followingInProgress={props.followingInProgress}
+                  isFetching={props.isFetching}/>
+
+        </div>
+    );
+};
+
+
+type UserPropsType = {
+    users: userType[]
+    pageSize: number
+    addUnFollow: (id: number) => void
+    addFollow: (id: number) => void
+    isFetching: boolean
+    followingInProgress: number[]
+}
+const User = (props: UserPropsType) => {
+
+    return <> {
+        props.users.map(el => {
+            const followHandler = () => {
+                props.addFollow(el.id)
+            }
+            const unFollowHandler = () => {
+                props.addUnFollow(el.id)
+            }
+            return <div key={el.id} className={s.containerUser}>
                     <span>
                         <div>
                             <NavLink to={"/profile/" + el.id}>
@@ -73,7 +73,7 @@ export const Users = (props: UsersPropsType) => {
 
                                     </div>
                                     </span>
-                        <span>
+                <span>
                                     <span>
                                     <div>{el.name}</div>
                                     <div>{el.status}</div>
@@ -83,12 +83,10 @@ export const Users = (props: UsersPropsType) => {
                                     <div>{el.followed}</div>
                                     </span>
                                     </span>
-                    </div>
-                })
-            }
-        </div>
-    );
-};
-
+            </div>
+        })
+    }
+    </>
+}
 
 

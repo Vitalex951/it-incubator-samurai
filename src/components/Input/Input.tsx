@@ -7,6 +7,7 @@ type InputPropsType = {
     onClickAdd?: () => void
     onKey?: (e: KeyboardEvent<HTMLInputElement>) => void
     onBlur?: (isDone: boolean) => void
+    className?: string
 }
 
 export const Input = (props: InputPropsType) => {
@@ -22,10 +23,10 @@ export const Input = (props: InputPropsType) => {
         && e.key === 'Enter'
         && props.onClickAdd()
     }
-
+    const className = props.className ? props.className : ''
     return (
-        <input className={''}
-               autoFocus={props.autoFocus? props.autoFocus: false}
+        <input className={className}
+               autoFocus={props.autoFocus ? props.autoFocus : false}
                onChange={onChangeInputHandler}
                onKeyPress={onKeyPressHandler}
                onBlur={onBlurHandler}
