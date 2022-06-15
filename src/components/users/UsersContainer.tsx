@@ -19,7 +19,7 @@ export type userType = {
     followed: boolean
 }
 
-type photosType = {
+export type photosType = {
     small: null
     large: null
 }
@@ -55,9 +55,9 @@ export const UsersContainer = () => {
 
     if (!auth) return <Navigate to="/login"/>
     return <div className={s.container}>
-        <Paginator/>
+        <div style={{margin: '10px 0 0 0'}}><Paginator/></div>
         {statusUser
-            ? <CircularProgress/>
+            ? <div className={s.circular}><CircularProgress/></div>
             : <Users
                 users={users}
                 pageSize={pageSize}

@@ -43,6 +43,16 @@ export const LoginFormik = (props: LoginFormikType) => {
             <Form>
                 <div className={style.loginBox}>
                     <h2>Login</h2>
+                    <div className={style.freeAcc}>
+                        <div>To log in get registered {' '}
+                            <a href="https://social-network.samuraijs.com/" target="_blank">here</a></div>
+                        <div>or use common test account credentials:</div>
+                        <p/>
+
+                        Email: <span>free@samuraijs.com</span><p/>
+
+                        Password: <span>free</span>
+                    </div>
                     <div className={style.userBox}>
                         <Field placeholder="Login" type="text" name="email"/>
                         <div className={style.error}>

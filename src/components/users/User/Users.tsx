@@ -4,7 +4,10 @@ import {userType} from "../UsersContainer";
 import ava from '../../../img/personal-user.png'
 import {NavLink} from "react-router-dom";
 import s from './User.module.css';
-
+import {IconButton} from "@material-ui/core";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 type UsersPropsType = {
@@ -17,76 +20,69 @@ type UsersPropsType = {
 }
 
 export const Users = (props: UsersPropsType) => {
+    console.log(props.users)
+    const user = props.users?.map(el => <User key={el.id}
+                                              addFollow={props.addFollow}
+                                              user={{...el}}
+                                              addUnFollow={props.addUnFollow}
+                                              followingInProgress={props.followingInProgress}
+                                              isFetching={props.isFetching}/>
+    )
     return (
         <div className={s.container}>
-            <User users={props.users}
-                  pageSize={props.pageSize}
-                  addFollow={props.addFollow}
-                  addUnFollow={props.addUnFollow}
-                  followingInProgress={props.followingInProgress}
-                  isFetching={props.isFetching}/>
-
+            {user}
         </div>
     );
 };
 
 
 type UserPropsType = {
-    users: userType[]
-    pageSize: number
+    user: userType
     addUnFollow: (id: number) => void
     addFollow: (id: number) => void
     isFetching: boolean
     followingInProgress: number[]
+
 }
-const User = (props: UserPropsType) => {
-
-    return <> {
-        props.users.map(el => {
-            const followHandler = () => {
-                props.addFollow(el.id)
-            }
-            const unFollowHandler = () => {
-                props.addUnFollow(el.id)
-            }
-            return <div key={el.id} className={s.containerUser}>
-                    <span>
-                        <div>
-                            <NavLink to={"/profile/" + el.id}>
-                            <img
-                                className={s.userPhoto}
-                                src={el.photos.small ? el.photos.small : ava}/>
-                            </NavLink>
-
-                        </div>
-                        <div>
-
-                                {el.followed ?
-                                    <Button
-                                        disabled={props.followingInProgress.some(id => id === el.id)}
-                                        name={'Unfollow'}
-                                        callback={unFollowHandler}/>
-                                    : <Button
-                                        disabled={props.followingInProgress.some(id => id === el.id)}
-                                        name={'Follow'}
-                                        callback={followHandler}/>}
-
-                                    </div>
-                                    </span>
-                <span>
-                                    <span>
-                                    <div>{el.name}</div>
-                                    <div>{el.status}</div>
-                                    </span>
-                                    <span>
-                                    <div>{el.status}</div>
-                                    <div>{el.followed}</div>
-                                    </span>
-                                    </span>
-            </div>
-        })
+const User: React.FC<UserPropsType> = ({user, isFetching, followingInProgress, addUnFollow, addFollow}) => {
+    const followHandler = () => {
+        addFollow(user.id)
     }
-    </>
+    const unFollowHandler = () => {
+        addUnFollow(user.id)
+    }
+    const disabled = followingInProgress.some(id => id === user.id)
+
+    return <div className={s.containerUser}>
+        <div>
+            <NavLink to={"/profile/" + user.id}>
+                <img
+                    className={s.userPhoto}
+                    src={user.photos.small ? user.photos.small : ava}/>
+            </NavLink>
+
+        </div>
+        <div>
+
+            {user.followed ?
+                <IconButton aria-label="delete" size="large">
+                    <CloseIcon fontSize="medium" color={'info'} onClick={unFollowHandler}/>
+                </IconButton>
+                : <IconButton aria-label="delete" size="large">
+                    <CheckCircleIcon fontSize="medium" color={'info'} onClick={followHandler}/>
+                </IconButton>
+            }
+
+        </div>
+        <span>
+                                    <div>{user.name}</div>
+                                    <div>{user.status}</div>
+                                    </span>
+        <span>
+                                    <div>{user.status}</div>
+                                    <div>{user.followed}</div>
+                                    </span>
+    </div>
 }
 
 

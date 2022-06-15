@@ -17,7 +17,7 @@ const initialState: usersType = {
             "status": null
         },],
     totalUsersCount: 50,
-    pageSize: 10,
+    pageSize: 9,
     currentPage: 1,
     isFetching: true,
     followingInProgress: []

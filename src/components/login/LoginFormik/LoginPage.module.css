@@ -8,6 +8,16 @@
     border-radius: 10px;
 }
 
+.freeAcc {
+    color: white;
+    margin: 15px;
+}
+.freeAcc a {
+    color: white;
+}
+.freeAcc span {
+    color: #03e9f4;
+}
 .loginBox h2 {
     margin: 0 0 30px;
     padding: 0;

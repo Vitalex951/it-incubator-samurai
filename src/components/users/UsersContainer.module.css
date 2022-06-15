@@ -1,7 +1,13 @@
 .container {
-    width: 500px;
+    width: 550px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.circular {
+    min-height: 400px;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
