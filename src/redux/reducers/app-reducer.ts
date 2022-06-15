@@ -1,6 +1,6 @@
 const initialState = {
-    status: false as RequestStatusType,
-    statusUser: false as RequestStatusType
+    status: false,
+    statusUser: false
 }
 
 //Reducer
@@ -9,7 +9,7 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
         case 'APP/SET-STATUS':
             return {...state, status: action.status}
         case "APP/SET-USER-STATUS":
-            return {...state, statusUser: action.status}
+            return {...state, statusUser: action.statusUser}
         default:
             return state
     }
@@ -17,14 +17,14 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
 
 
 //AC
-export const setAppStatusAC = (status: RequestStatusType) => {
+export const setAppStatusAC = (status: boolean) => {
     return {
         type: "APP/SET-STATUS", status
     } as const
 }
-export const setUserStatusAC = (status: RequestStatusType) => {
+export const setUserStatusAC = (statusUser: boolean) => {
     return {
-        type: "APP/SET-USER-STATUS", status
+        type: "APP/SET-USER-STATUS", statusUser
     } as const
 }
 
@@ -32,6 +32,4 @@ export const setUserStatusAC = (status: RequestStatusType) => {
 //Types
 type InitialStateType = typeof initialState
 
-export type RequestStatusType = boolean
-
-export type AppActionsReducerType = ReturnType<typeof setAppStatusAC> |  ReturnType<typeof setUserStatusAC>
+export type AppActionsReducerType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setUserStatusAC>

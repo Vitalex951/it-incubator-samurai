@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {UserAPI} from "../../components/api/UserAPI";
-import {ProfileApi} from "../../components/api/ProfileApi";
+import {profileApi} from "../../components/api/ProfileApi";
 import {setAppStatusAC, setUserStatusAC} from "./app-reducer";
 
 const initialState: usersType = {
@@ -106,7 +106,7 @@ export const changeUsersCountAC = (usersCount: number) => {
 export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFetchingAC(true))
     dispatch(setUserStatusAC(true))
-    ProfileApi.getUsers(currentPage, pageSize)
+    profileApi.getUsers(currentPage, pageSize)
         .then(response => {
                 dispatch(getStateAC(response.items))
                 dispatch(toggleisFetchingAC(false))

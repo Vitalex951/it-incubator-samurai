@@ -1,10 +1,13 @@
 .dialogs {
     display: flex;
+    background-color: #ecf1f5;
+    border-radius: 10px;
 }
 
 .dialogsItem {
     padding: 10px;
     color: white;
+
 }
 
 .dialogsItem h4 {

@@ -24,7 +24,7 @@ export const LoginFormik = (props: LoginFormikType) => {
 
     const validationSchema = Yup.object({
         email: Yup.string().required('Required').email('Invalid email format'),
-        password: Yup.string().required('Required').min(5, 'Minimum 5 symbols'),
+        password: Yup.string().required('Required').min(4, 'Minimum 4 symbols'),
     })
 
     const submit = (values: valuesFromFormikType, {setSubmitting, resetForm}: {
@@ -40,8 +40,8 @@ export const LoginFormik = (props: LoginFormikType) => {
         onSubmit={submit}
     >
         {({isSubmitting}) => (
-            <Form>
-                <div className={style.loginBox}>
+            <Form className={style.loginBox}>
+                <div>
                     <h2>Login</h2>
                     <div className={style.freeAcc}>
                         <div>To log in get registered {' '}

@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {v1} from "uuid";
-import {ProfileApi} from "../../components/api/ProfileApi";
+import {profileApi} from "../../components/api/ProfileApi";
+import {setAppStatusAC} from "./app-reducer";
 
 
 export const initialState: StateType = {
@@ -10,29 +11,30 @@ export const initialState: StateType = {
         {id: v1(), message: 'Are you free today?', likes: 5},
     ],
     profile: {
-        "aboutMe": "я круто чувак 1001%",
-        "contacts": {
-            "facebook": "facebook.com",
-            "website": null,
-            "vk": "vk.com/dimych",
-            "twitter": "https://twitter.com/@sdf",
-            "instagram": "instagra.com/sds",
-            "youtube": null,
-            "github": "github.com",
-            "mainLink": null
+        aboutMe: "",
+        contacts: {
+            facebook: "",
+            website: null,
+            vk: "",
+            twitter: "",
+            instagram: "",
+            youtube: "",
+            github: "",
+            mainLink: null
         },
-        "lookingForAJob": true,
-        "lookingForAJobDescription": "не ищу, а дурачусь",
-        "fullName": "Vitali",
-        "userId": 2,
-        "photos": {
-            "small": "",
-            "large": "https://i.pinimg.com/736x/f5/27/41/f52741fb62bf1d821948a49204406bdc.jpg"
+        lookingForAJob: true,
+        lookingForAJobDescription: "",
+        fullName: "",
+        userId: 2,
+        photos: {
+            small: "",
+            large: ""
         }
     },
     statusMainUser: '',
     statusUser: '',
-    isStatus: "mainUser"
+    isStatus: "mainUser",
+    loaderStatus: false
 }
 //Reducer
 export const profileReducer = (state: StateType = initialState, action: ProfileActionType): StateType => {
@@ -52,6 +54,8 @@ export const profileReducer = (state: StateType = initialState, action: ProfileA
             return {...state, statusUser: action.status}
         case "CHANGE-STATUS":
             return {...state, isStatus: action.isStatus}
+        case "PROFILE/CHANGE-LOADER-STATUS":
+            return {...state, loaderStatus: action.status}
         default:
             return state
     }
@@ -71,18 +75,7 @@ export const setUserProfileAC = (profile: ProfileType) => {
         profile
     } as const
 }
-export const showProfileUser = (paramsID: string | undefined) => (dispatch: Dispatch) => {
-    if (paramsID) {
-        ProfileApi.showMainUser(paramsID)
-            .then(response => {
-                    dispatch(setUserProfileAC(response.data))
-                }
-            )
-    } else {
-        if (initialState.profile !== null)
-            dispatch(setUserProfileAC(initialState.profile))
-    }
-}
+
 export const setStatusMainUserAC = (status: string) => {
     return {
         type: "SET-STATUS-MAIN-USER",
@@ -101,24 +94,41 @@ export const changeIsStatusAC = (isStatus: StatusType) => {
         isStatus
     } as const
 }
+export const changeLoaderStatusAC = (status: boolean) => {
+    return {
+        type: "PROFILE/CHANGE-LOADER-STATUS",
+        status
+    } as const
+}
 
 
 //Thunk
 export const getStatusMainUser = (userID: string) => (dispatch: Dispatch) => {
-    ProfileApi.getStatus(userID).then(res => {
+    profileApi.getStatus(userID).then(res => {
         dispatch(setStatusMainUserAC(res.data))
     })
 }
 export const getStatusUser = (userID: string) => (dispatch: Dispatch) => {
-    ProfileApi.getStatus(userID).then(res => {
+    profileApi.getStatus(userID).then(res => {
         dispatch(setStatusUserAC(res.data))
     })
 }
 export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    ProfileApi.updateStatus(status).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setStatusMainUserAC(status))
-        }
+    profileApi.updateStatus(status)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setStatusMainUserAC(status))
+            }
+        })
+}
+export const showProfileUserTC = (paramsID: string) => (dispatch: Dispatch) => {
+    dispatch(changeLoaderStatusAC(true))
+    profileApi.showUser(paramsID)
+        .then(res => {
+                dispatch(setUserProfileAC(res.data))
+            }
+        ).finally(() => {
+        dispatch(changeLoaderStatusAC(false))
     })
 }
 
@@ -129,6 +139,7 @@ export type ProfileActionType = ProfileReducerACType
     | setStatusMainUserACType
     | setStatusUserACType
     | ChangeIsStatusACType
+    | ReturnType<typeof changeLoaderStatusAC>
 
 export type setStatusMainUserACType = ReturnType<typeof setStatusMainUserAC>
 export type setStatusUserACType = ReturnType<typeof setStatusUserAC>
@@ -142,6 +153,7 @@ export type StateType = {
     statusMainUser: null | string
     statusUser: null | string
     isStatus: StatusType
+    loaderStatus: boolean
 }
 
 export type StatusType = 'user' | 'mainUser'

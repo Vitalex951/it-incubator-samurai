@@ -31,7 +31,8 @@ beforeEach(() => {
         },
         statusMainUser: '',
         statusUser: '',
-        isStatus: "mainUser"
+        isStatus: "mainUser",
+        loaderStatus: false
     }
 })
 test('new post should be added', () => {

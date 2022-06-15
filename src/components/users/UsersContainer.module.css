@@ -4,6 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #ecf1f5;
+    border-radius: 10px;
 }
 .circular {
     min-height: 400px;

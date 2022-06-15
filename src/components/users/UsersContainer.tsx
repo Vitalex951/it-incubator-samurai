@@ -8,6 +8,7 @@ import {Navigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
 import Paginator from "./Paginator/Paginator";
 import s from './UsersContainer.module.css'
+import {Preloader} from "../common/Preloader";
 
 
 
@@ -25,7 +26,6 @@ export type photosType = {
 }
 
 export const UsersContainer = () => {
-
     const pageSize = useSelector<AppRootReducerType, number>(state => state.users.pageSize)
     const currentPage = useSelector<AppRootReducerType, number>(state => state.users.currentPage)
     const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.data.isAuth)
@@ -37,6 +37,9 @@ export const UsersContainer = () => {
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(getUsersTC(1, 9))
+    }, [])
 
     useEffect(() => {
         dispatch(getUsersTC(currentPage, pageSize))
@@ -54,6 +57,7 @@ export const UsersContainer = () => {
     const statusUser = useAppSelector(state => state.appStatus.statusUser)
 
     if (!auth) return <Navigate to="/login"/>
+
     return <div className={s.container}>
         <div style={{margin: '10px 0 0 0'}}><Paginator/></div>
         {statusUser

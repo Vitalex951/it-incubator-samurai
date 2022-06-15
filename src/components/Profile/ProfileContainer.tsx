@@ -6,11 +6,14 @@ import {
     changeIsStatusAC,
     getStatusMainUser,
     getStatusUser,
-    showProfileUser,
+    showProfileUserTC,
     updateStatus
 } from "../../redux/reducers/Profile-reducer";
 import {Navigate, useParams} from "react-router-dom";
 import {MyPosts} from "./MyPosts/MyPosts";
+import {Preloader} from "../common/Preloader";
+import {CircularProgress} from "@material-ui/core";
+import style from './Profile.module.css'
 
 
 export const ProfileContainer = () => {
@@ -22,13 +25,14 @@ export const ProfileContainer = () => {
     const statusUser = useAppSelector(state => state.profile.statusUser)
     const myID = useAppSelector(state => state.auth.data.id)
     const isStatus = useAppSelector(state => state.profile.isStatus)
+    const statusLoader = useAppSelector(state => state.profile.loaderStatus)
 
     const dispatch = useDispatch()
 
     const params = useParams()
 
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [valueMainUser, setValueMainUser] = useState<string>('')
+    const [valueMainUser, setValueMainUser] = useState<string>(statusMainUser ? statusMainUser : '')
 
     const onDoubleClick = (editMode: boolean) => {
         setEditMode(editMode)
@@ -37,6 +41,17 @@ export const ProfileContainer = () => {
         dispatch(updateStatus(valueMainUser))
         setEditMode(false)
     }
+
+    useEffect(() => {
+        if (myID) {
+            dispatch(showProfileUserTC(myID.toString()))
+        }
+    }, [])
+    // useEffect(() => {
+    //     if (myID) {
+    //         dispatch(showProfileUserTC(myID.toString()))
+    //     }
+    // }, [])
 
     //set in input my status
     useEffect(() => {
@@ -49,8 +64,8 @@ export const ProfileContainer = () => {
 
     //show status newUser
     useEffect(() => {
-        dispatch(showProfileUser(params.id))
         if (params.id) {
+            dispatch(showProfileUserTC(params.id))
             dispatch(getStatusUser(params.id))
             dispatch(changeIsStatusAC("user"))
         } else if (myID) {
@@ -61,20 +76,28 @@ export const ProfileContainer = () => {
 
     if (!auth) return <Navigate to="/login"/>
 
-
     return (
-        <div>
-            <ProfileInfo
-                isStatus={isStatus}
-                profile={profile}
-                valueMainUser={valueMainUser}
-                onDoubleClick={onDoubleClick}
-                editMode={editMode}
-                setValueMainUser={setValueMainUser}
-                addStatus={addStatus}
-                valueUser={statusUser}
-            />
-            <MyPosts posts={posts}/>
+        <div className={style.container}>
+            {statusLoader ? <div style={{
+                width: '640px',
+                height: '500px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}><CircularProgress/></div> : <>
+                <ProfileInfo
+                    isStatus={isStatus}
+                    profile={profile}
+                    valueMainUser={valueMainUser}
+                    onDoubleClick={onDoubleClick}
+                    editMode={editMode}
+                    setValueMainUser={setValueMainUser}
+                    addStatus={addStatus}
+                    valueUser={statusUser}
+                />
+                <MyPosts posts={posts}/>
+            </>
+            }
         </div>
     );
 };

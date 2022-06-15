@@ -1,13 +1,13 @@
 import {instance} from "./instance";
 
-export const ProfileApi = {
+export const profileApi = {
     getUsers(currentPage: number = 1, pageSize: number = 5) {
         return (
             instance.get(`users?page=${currentPage}&count=${pageSize}`)
                 .then(response => response.data)
         );
     },
-    showMainUser(id: string) {
+    showUser(id: string) {
         return (
             instance.get(`profile/${id}`)
         )
