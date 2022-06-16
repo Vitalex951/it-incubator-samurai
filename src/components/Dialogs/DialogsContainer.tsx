@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import s from './Dialogs.module.css'
 import {DialogsType, UsersType} from "../trash/store";
 import {useDispatch, useSelector} from "react-redux";
@@ -20,7 +20,49 @@ const DialogsContainer = () => {
         dispatch(sendMessage(values.message))
     }
 
-    if (!auth) return <Navigate to="/login"/>
+    const objDiv = document.querySelector('#scrollID')
+
+
+    useEffect(() => {
+        if (objDiv){
+            objDiv.scrollTo(0,  objDiv.scrollHeight)
+        }
+    }, [message])
+
+    // useEffect(() => {
+    //     if (objDiv) {
+    //         objDiv.addEventListener('scroll', scrollHandler);
+    //     }
+    //     return function () {
+    //         if (objDiv){
+    //             objDiv.removeEventListener('scroll', scrollHandler)
+    //         }
+    //     }
+    // }, [objDiv])
+
+    // const scrollHandler = (e: any) => {
+    //     // e.target.scrollHeight = e.target.scrollTop
+    //     // console.log(e)
+    //     console.log(e.target.scrollHeight)
+    //     console.log(e.target.scrollTop)
+    // }
+
+
+        // const myRef = useRef(null)
+        //
+        // const executeScroll = () => {
+        //     if (myRef !== null){
+        //         // @ts-ignore
+        //         // @ts-ignore
+        //         console.log( myRef.current.scrollTop)
+        //         // @ts-ignore
+        //         console.log( myRef.current.offsetTop)
+        //         // @ts-ignore
+        //         console.log( myRef.current.scrollTop)
+        //     }
+        // }
+
+        if (!auth) return <Navigate to="/login"/>
 
     return (
         <div className={s.dialogs}>
@@ -70,31 +112,39 @@ const DialogsContainer = () => {
                         </div>
 
                     </div>
-                    <div className={s.message}>
+                    <div className={s.message} >
                         <h5>Vasya</h5>
                         <hr/>
-                        <div className={s.messageContainer}>
-                            <img src={ava}/>
-                            <div className={s.text}>
-                               Where are you? Go play football
-                            </div>
+                        <div id={'scrollID'} className={s.messagesBlock}>
+                            <div  className={s.messageContainer}>
+                                <img src={ava}/>
+                                <div className={s.text}>
+                                    Where are you? Go play football
+                                </div>
 
-                        </div>
-                        <div className={s.messageContainer}>
-                            <img src={ava}/>
-                            <div className={s.text}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                Lorem ipsum dolor sit amet, consectetur adipisicing
                             </div>
+                            <div className={s.messageContainer}>
+                                <img src={ava}/>
+                                <div className={s.text}>
+                                    Where are you? Go play football
+                                </div>
 
-                        </div>
-                        {message.map(el =>   <div key={el.id} className={s.messageContainerMy}>
-                            <div className={s.textMy}>
-                                {el.message}
                             </div>
-                            <img src={ava}/>
-                        </div>)}
+                            <div className={s.messageContainer}>
+                                <img src={ava}/>
+                                <div className={s.text}>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                                </div>
+
+                            </div>
+                            {message.map(el => <div key={el.id} className={s.messageContainerMy}>
+                                <div className={s.textMy}>
+                                    {el.message}
+                                </div>
+                                <img src={ava}/>
+                            </div>)}</div>
 
                         <div className={s.addMessage}>
                             <AddMessageForm callback={onclickAddNewBody}/>

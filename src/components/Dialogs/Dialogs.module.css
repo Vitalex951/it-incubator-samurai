@@ -3,7 +3,10 @@
     background-color: #ecf1f5;
     border-radius: 10px;
 }
-
+.messagesBlock {
+    max-height: 400px;
+    overflow: auto;
+}
 .dialogsItem {
     padding: 10px;
     color: white;

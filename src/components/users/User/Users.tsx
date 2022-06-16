@@ -72,16 +72,15 @@ const User: React.FC<UserPropsType> = ({user, isFetching, followingInProgress, a
                     <CheckCircleIcon fontSize="medium" color={'info'} onClick={followHandler}/>
                 </IconButton>
             }
-
         </div>
+
         <span>
-                                    <div>{user.name}</div>
-                                    <div>{user.status}</div>
-                                    </span>
+            <div>{user.name}</div>
+            <div>{user.status}</div></span>
+
         <span>
-                                    <div>{user.status}</div>
-                                    <div>{user.followed}</div>
-                                    </span>
+            <div>{user.followed}</div>
+        </span>
     </div>
 }
 

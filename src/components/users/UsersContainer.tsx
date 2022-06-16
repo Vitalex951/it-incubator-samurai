@@ -38,7 +38,7 @@ export const UsersContainer = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getUsersTC(1, 9))
+        dispatch(getUsersTC(1, 10))
     }, [])
 
     useEffect(() => {
