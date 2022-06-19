@@ -91,3 +91,5 @@ export type AuthUser = {
     login: null | string
     isAuth: boolean
 }
+
+

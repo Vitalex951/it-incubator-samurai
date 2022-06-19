@@ -1,11 +1,9 @@
 import React from 'react';
-import {Button} from "../../Button/Button";
 import {userType} from "../UsersContainer";
 import ava from '../../../img/personal-user.png'
 import {NavLink} from "react-router-dom";
 import s from './User.module.css';
 import {IconButton} from "@material-ui/core";
-import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -20,7 +18,6 @@ type UsersPropsType = {
 }
 
 export const Users = (props: UsersPropsType) => {
-    console.log(props.users)
     const user = props.users?.map(el => <User key={el.id}
                                               addFollow={props.addFollow}
                                               user={{...el}}

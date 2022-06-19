@@ -2,13 +2,13 @@ import {Dispatch} from "redux";
 import {UserAPI} from "../../components/api/UserAPI";
 import {profileApi} from "../../components/api/ProfileApi";
 import {setAppStatusAC, setUserStatusAC} from "./app-reducer";
+import {userType} from "../../components/users/UsersContainer";
 
 const initialState: usersType = {
     items: [
         {
             "name": "Fron",
             "id": 23348,
-            "uniqueUrlName": null,
             "photos": {
                 "small": null,
                 "large": null
@@ -108,10 +108,9 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
     dispatch(setUserStatusAC(true))
     profileApi.getUsers(currentPage, pageSize)
         .then(response => {
-                dispatch(getStateAC(response.items))
+                dispatch(getStateAC(response.data.items))
                 dispatch(toggleisFetchingAC(false))
-                dispatch(changeUsersCountAC(response.totalCount))
-                console.log()
+                dispatch(changeUsersCountAC(response.data.totalCount))
             }
         )
         .finally(() => {
@@ -150,17 +149,17 @@ export type usersType = {
     followingInProgress: number[]
 }
 
-type userType = {
-    "name": string
-    "id": number
-    "uniqueUrlName": any
-    "photos": {
-        "small": any
-        "large": any
-    },
-    "status": any
-    "followed": boolean
-}
+// type userType = {
+//     "name": string
+//     "id": number
+//     "uniqueUrlName": any
+//     "photos": {
+//         "small": any
+//         "large": any
+//     },
+//     "status": any
+//     "followed": boolean
+// }
 
 type actionsType =
     followACType

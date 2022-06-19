@@ -31,7 +31,7 @@ beforeEach(() => {
         },
         statusMainUser: '',
         statusUser: '',
-        isStatus: "mainUser",
+        isUser: "mainUser",
         loaderStatus: false
     }
 })

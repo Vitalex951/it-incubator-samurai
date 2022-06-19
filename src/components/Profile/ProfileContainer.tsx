@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../redux/store";
 import {
-    changeIsStatusAC,
+    changeIsStatusAC, changeProfilePhotoTC, changeProfileTC,
     getStatusMainUser,
     getStatusUser,
     showProfileUserTC,
@@ -11,9 +11,9 @@ import {
 } from "../../redux/reducers/Profile-reducer";
 import {Navigate, useParams} from "react-router-dom";
 import {MyPosts} from "./MyPosts/MyPosts";
-import {Preloader} from "../common/Preloader";
 import {CircularProgress} from "@material-ui/core";
 import style from './Profile.module.css'
+import {valuesFromProfileEditType} from "./ProfileEdit/ProfileEdit";
 
 
 export const ProfileContainer = () => {
@@ -24,7 +24,7 @@ export const ProfileContainer = () => {
     const statusMainUser = useAppSelector(state => state.profile.statusMainUser)
     const statusUser = useAppSelector(state => state.profile.statusUser)
     const myID = useAppSelector(state => state.auth.data.id)
-    const isStatus = useAppSelector(state => state.profile.isStatus)
+    const isUser = useAppSelector(state => state.profile.isUser)
     const statusLoader = useAppSelector(state => state.profile.loaderStatus)
 
     const dispatch = useDispatch()
@@ -37,28 +37,31 @@ export const ProfileContainer = () => {
     const onDoubleClick = (editMode: boolean) => {
         setEditMode(editMode)
     }
+    const changeProfilePhoto = (photo: any) => {
+        dispatch(changeProfilePhotoTC(photo))
+    }
+
+    const editProfile = (fullName: string, values: valuesFromProfileEditType) => {
+        if(myID){
+            dispatch(changeProfileTC(fullName, myID, values))
+        }
+
+
+    }
+
     const addStatus = () => {
         dispatch(updateStatus(valueMainUser))
         setEditMode(false)
     }
 
-    useEffect(() => {
-        if (myID) {
-            dispatch(showProfileUserTC(myID.toString()))
-        }
-    }, [])
-    // useEffect(() => {
-    //     if (myID) {
-    //         dispatch(showProfileUserTC(myID.toString()))
-    //     }
-    // }, [])
 
     //set in input my status
     useEffect(() => {
         if (myID) {
             getStatusMainUser(myID.toString())
-            if (statusMainUser)
+            if (statusMainUser){
                 setValueMainUser(statusMainUser)
+            }
         }
     }, [statusMainUser])
 
@@ -70,6 +73,7 @@ export const ProfileContainer = () => {
             dispatch(changeIsStatusAC("user"))
         } else if (myID) {
             dispatch(getStatusMainUser(myID.toString()))
+            dispatch(showProfileUserTC(myID.toString()))
             dispatch(changeIsStatusAC("mainUser"))
         }
     }, [params.id])
@@ -86,7 +90,9 @@ export const ProfileContainer = () => {
                 alignItems: 'center',
             }}><CircularProgress/></div> : <>
                 <ProfileInfo
-                    isStatus={isStatus}
+                    editProfile={editProfile}
+                    changeProfilePhoto={changeProfilePhoto}
+                    isUser={isUser}
                     profile={profile}
                     valueMainUser={valueMainUser}
                     onDoubleClick={onDoubleClick}

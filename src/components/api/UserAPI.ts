@@ -1,15 +1,14 @@
 import {instance} from "./instance";
+import {ResponseType} from "./ProfileApi";
 
 export const UserAPI = {
     unFollowUser(id: number) {
-        return (
-            instance.delete(`follow/${id}`)
-        )
+        return instance.delete<ResponseType>(`follow/${id}`)
+
     },
     followUser(id: number) {
-        return (
-            instance.post(`follow/${id}`, null)
-        )
+        return instance.post<ResponseType>(`follow/${id}`, null)
+
     },
 
 }

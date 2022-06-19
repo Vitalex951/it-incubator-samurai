@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {v1} from "uuid";
-import {profileApi} from "../../components/api/ProfileApi";
-import {setAppStatusAC} from "./app-reducer";
+import {profileApi, SaveProfileType} from "../../components/api/ProfileApi";
+import {valuesFromProfileEditType} from "../../components/Profile/ProfileEdit/ProfileEdit";
 
 
 export const initialState: StateType = {
@@ -33,7 +33,7 @@ export const initialState: StateType = {
     },
     statusMainUser: '',
     statusUser: '',
-    isStatus: "mainUser",
+    isUser: "mainUser",
     loaderStatus: false
 }
 //Reducer
@@ -48,14 +48,17 @@ export const profileReducer = (state: StateType = initialState, action: ProfileA
             return {...state, postData: [newPost, ...state.postData]}
         case "SET-PROFILE":
             return {...state, profile: {...action.profile}}
+
         case "SET-STATUS-MAIN-USER":
             return {...state, statusMainUser: action.status}
         case "SET-STATUS-USER":
             return {...state, statusUser: action.status}
         case "CHANGE-STATUS":
-            return {...state, isStatus: action.isStatus}
+            return {...state, isUser: action.isStatus}
         case "PROFILE/CHANGE-LOADER-STATUS":
             return {...state, loaderStatus: action.status}
+        case "PROFILE/UPDATE-PROFILE-PHOTO":
+            return {...state, profile: {...state.profile, photos: action.photo}}
         default:
             return state
     }
@@ -75,7 +78,6 @@ export const setUserProfileAC = (profile: ProfileType) => {
         profile
     } as const
 }
-
 export const setStatusMainUserAC = (status: string) => {
     return {
         type: "SET-STATUS-MAIN-USER",
@@ -100,6 +102,12 @@ export const changeLoaderStatusAC = (status: boolean) => {
         status
     } as const
 }
+export const updateProfilePhotoAC = (photo: PhotosType) => {
+    return {
+        type: "PROFILE/UPDATE-PROFILE-PHOTO",
+        photo
+    } as const
+}
 
 
 //Thunk
@@ -110,12 +118,14 @@ export const getStatusMainUser = (userID: string) => (dispatch: Dispatch) => {
 }
 export const getStatusUser = (userID: string) => (dispatch: Dispatch) => {
     profileApi.getStatus(userID).then(res => {
+        console.log(res)
         dispatch(setStatusUserAC(res.data))
     })
 }
 export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     profileApi.updateStatus(status)
         .then(res => {
+            console.log('updateStatus', res)
             if (res.data.resultCode === 0) {
                 dispatch(setStatusMainUserAC(status))
             }
@@ -131,6 +141,51 @@ export const showProfileUserTC = (paramsID: string) => (dispatch: Dispatch) => {
         dispatch(changeLoaderStatusAC(false))
     })
 }
+export const changeProfilePhotoTC = (photo: string | Blob) => (dispatch: Dispatch) => {
+    dispatch(changeLoaderStatusAC(true))
+    profileApi.changePhotoProfile(photo)
+        .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(updateProfilePhotoAC(res.data.data.photos))
+                }
+
+            }
+        ).finally(() => {
+        dispatch(changeLoaderStatusAC(false))
+    })
+}
+export const changeProfileTC = (fullname: string, userId: number, obj: valuesFromProfileEditType) => (dispatch: any) => {
+    dispatch(changeLoaderStatusAC(true))
+    const {twitter, github, vk, facebook, instagram, website, mainLink, youtube, lookingForAJob, aboutMe} = obj
+    const profile: SaveProfileType = {
+        userId: userId,
+        lookingForAJob: lookingForAJob,
+        lookingForAJobDescription: 'React',
+        fullName: fullname,
+        aboutMe: aboutMe,
+        contacts: {
+            github: github ? github : null,
+            twitter: twitter ? twitter : null,
+            youtube: youtube ? youtube : null,
+            instagram: instagram ? instagram : null,
+            vk: vk ? vk : null,
+            facebook: facebook ? facebook : null,
+            website: website ? website : null,
+            mainLink: mainLink ? mainLink : null,
+        }
+    }
+    profileApi.changeProfile(profile)
+        .then(res => {
+                debugger
+                console.log(res)
+                if (res.data.resultCode === 0) {
+                    dispatch(showProfileUserTC(userId.toString()))
+                }
+            }
+        ).finally(() => {
+        dispatch(changeLoaderStatusAC(false))
+    })
+}
 
 
 //Types
@@ -140,6 +195,7 @@ export type ProfileActionType = ProfileReducerACType
     | setStatusUserACType
     | ChangeIsStatusACType
     | ReturnType<typeof changeLoaderStatusAC>
+    | ReturnType<typeof updateProfilePhotoAC>
 
 export type setStatusMainUserACType = ReturnType<typeof setStatusMainUserAC>
 export type setStatusUserACType = ReturnType<typeof setStatusUserAC>
@@ -149,10 +205,10 @@ export type ChangeIsStatusACType = ReturnType<typeof changeIsStatusAC>
 
 export type StateType = {
     postData: Array<PostDataType>
-    profile: ProfileType | null
+    profile: ProfileType
     statusMainUser: null | string
     statusUser: null | string
-    isStatus: StatusType
+    isUser: StatusType
     loaderStatus: boolean
 }
 
@@ -170,18 +226,20 @@ export type ProfileType = {
     lookingForAJobDescription: string
     fullName: string
     userId: number
-    photos: {
-        small: string
-        large: string
-    }
+    photos: PhotosType
+}
+export type PhotosType = {
+    small: string | null
+    large: string | null
 }
 type ProfileContactsType = {
-    facebook: string,
-    website: any
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: any
-    github: string
-    mainLink: any
+    facebook: string | null,
+    website: string | null,
+    vk: string | null,
+    twitter: string | null,
+    instagram: string | null,
+    youtube: string | null,
+    github: string | null,
+    mainLink: string | null,
 }
+

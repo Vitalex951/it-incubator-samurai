@@ -1,0 +1,19 @@
+.infoDescription {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+
+.descriptionContacts {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoDescription input {
+   height: 10px;
+}
+
+.inputMUI {
+    margin: 10px 0;
+}

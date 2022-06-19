@@ -6,7 +6,7 @@ import s from './ProfileStatus.module.css'
 type ProfileStatusPropsType = {
     editMode: boolean
     valueMainUser: string
-    isStatus: StatusType
+    isUser: StatusType
     valueUser: string | null
 
     setValueMainUser: (status: string) => void
@@ -23,7 +23,7 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
     return (
         <div>
 
-            {props.isStatus === "mainUser"
+            {props.isUser === "mainUser"
             &&
             (props.editMode ? <div className={s.status}>
                     <Input
@@ -41,7 +41,7 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
                 </div>)}
 
 
-            {props.isStatus === "user"
+            {props.isUser === "user"
             && <span>{props.valueUser ? props.valueUser : 'no status'}</span>}
 
         </div>
