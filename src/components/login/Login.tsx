@@ -9,7 +9,7 @@ import {Navigate} from "react-router-dom";
 export const Login = () => {
     const dispatch = useDispatch()
     const logIn = (values: valuesFromFormikType, setSubmitting: (isSubmitting: boolean) => void) => {
-        dispatch(AuthLogin(values.email, values.password, values.rememberMe, setSubmitting))
+        dispatch(AuthLogin(values, setSubmitting))
     }
     const email = useAppSelector(state => state.auth.data.email)
 

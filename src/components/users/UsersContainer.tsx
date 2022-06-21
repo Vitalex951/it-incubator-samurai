@@ -32,6 +32,7 @@ export const UsersContainer = () => {
     const users = useSelector<AppRootReducerType, userType[]>(state => {
         return state.users.items
     })
+    const statusUser = useAppSelector(state => state.app.statusUser)
     const isFetching = useSelector<AppRootReducerType, boolean>(state => state.users.isFetching)
     const followingInProgress = useSelector<AppRootReducerType, number[]>(state => state.users.followingInProgress)
 
@@ -54,7 +55,7 @@ export const UsersContainer = () => {
 
     }
 
-    const statusUser = useAppSelector(state => state.appStatus.statusUser)
+
 
     if (!auth) return <Navigate to="/login"/>
 

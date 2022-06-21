@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from './ProfileInfo.module.css'
 import {ProfileType, StatusType} from "../../../redux/reducers/Profile-reducer";
 import {Preloader} from "../../common/Preloader";
@@ -7,6 +7,7 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 import {ProfileEdit, valuesFromProfileEditType} from "../ProfileEdit/ProfileEdit";
 import {TextField} from "@material-ui/core";
 import {FaEdit} from "react-icons/fa"
+import {AiOutlineCamera} from "react-icons/ai";
 
 type ProfileInfoProps = {
     profile: ProfileType | null
@@ -22,18 +23,22 @@ type ProfileInfoProps = {
     editProfile: (fullName: string, values: valuesFromProfileEditType) => void
 }
 const ProfileInfo = (props: ProfileInfoProps) => {
-    const [fullName, setfullName] = useState<string>(props.profile?.fullName ? props.profile?.fullName : '')
+    const [fullName, setFullName] = useState<string>('')
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             props.changeProfilePhoto(e.target.files[0])
         }
     }
+    useEffect(() => {
+        if (props.profile?.fullName)
+            setFullName(props.profile.fullName)
+    }, [props.profile?.fullName])
     const [edit, setEdit] = useState<boolean>(false)
     const changeEditOnClick = () => {
         setEdit(!edit)
     }
     const onChangeFullName = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setfullName(e.currentTarget.value)
+        setFullName(e.currentTarget.value)
     }
     const editProfile = (values: valuesFromProfileEditType) => {
         props.editProfile(fullName, values)
@@ -46,14 +51,22 @@ const ProfileInfo = (props: ProfileInfoProps) => {
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large ? props.profile.photos.large : ava}/>
 
-
-                {props.profile.userId && edit && <div><input type={'file'} onChange={onMainPhotoSelected}/></div>}
+                {props.profile.userId && <div className={s.editPhoto}>
+                    <input
+                        id='addPhoto'
+                        type='file'
+                        accept='.jpg, .jpeg, .png'
+                        onChange={onMainPhotoSelected}/>
+                    <label htmlFor='addPhoto'>
+                        <AiOutlineCamera size={24}/>
+                    </label>
+                </div>}
             </div>
 
             <div className={s.data}>
                 <div className={s.fullName}>
                     {edit
-                        ? <TextField label="FullName" value={fullName} variant="outlined" name="fullName"
+                        ? <TextField label="FullName" value={fullName} variant="outlined"
                                      onChange={onChangeFullName}/>
                         : props.profile.fullName}
 

@@ -1,8 +1,9 @@
 import {Dispatch} from "redux";
 import {UserAPI} from "../../components/api/UserAPI";
 import {profileApi} from "../../components/api/ProfileApi";
-import {setAppStatusAC, setUserStatusAC} from "./app-reducer";
+import {setUserStatusAC} from "./app-reducer";
 import {userType} from "../../components/users/UsersContainer";
+import {handlerServerNetworkError, handleServerAppError} from "../../components/utils/error-utils";
 
 const initialState: usersType = {
     items: [
@@ -107,12 +108,16 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
     dispatch(toggleisFetchingAC(true))
     dispatch(setUserStatusAC(true))
     profileApi.getUsers(currentPage, pageSize)
-        .then(response => {
-                dispatch(getStateAC(response.data.items))
+        .then(res => {
+                dispatch(getStateAC(res.data.items))
                 dispatch(toggleisFetchingAC(false))
-                dispatch(changeUsersCountAC(response.data.totalCount))
+                dispatch(changeUsersCountAC(res.data.totalCount))
             }
+
         )
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
+        })
         .finally(() => {
             dispatch(setUserStatusAC(false))
         })
@@ -120,22 +125,32 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
 export const changeFollowTC = (id: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFollowingProgressAC(id, true))
     UserAPI.followUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
+        .then(res => {
+            if (res.data.resultCode === 0) {
                 dispatch(followAC(id))
+            } else {
+                handleServerAppError(dispatch, res.data)
             }
             dispatch(toggleisFollowingProgressAC(id, false))
 
+        })
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
         })
 }
 export const changeUNFollowTC = (id: number) => (dispatch: Dispatch) => {
     dispatch(toggleisFollowingProgressAC(id, true))
     UserAPI.unFollowUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
+        .then(res => {
+            if (res.data.resultCode === 0) {
                 dispatch(unfollowAC(id))
+            } else {
+                handleServerAppError(dispatch, res.data)
             }
             dispatch(toggleisFollowingProgressAC(id, false))
+        })
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
         })
 }
 

@@ -3,11 +3,14 @@ import {Form, Formik} from "formik";
 import s from "./ProfileEdit.module.css";
 import {Checkbox, FormControlLabel, TextField} from '@material-ui/core';
 import {useAppSelector} from "../../../redux/store";
+import * as Yup from 'yup';
+import Button from "@mui/material/Button";
 
 
 type ProfileEditPropsType = {
     editProfile: (values: valuesFromProfileEditType) => void
 }
+
 export type setSubmitting = (isSubmitting: boolean) => void
 export type valuesFromProfileEditType = {
     aboutMe: string
@@ -36,18 +39,18 @@ export const ProfileEdit = (props: ProfileEditPropsType) => {
         mainLink: contacts.mainLink,
     }
 
-    // const validationSchema = Yup.object({
-    //     fullName: Yup.string().required('Required').min(1, 'Minimum 1 symbols'),
-    //     aboutMe: Yup.string().required('Required').min(1, 'Minimum 1 symbols'),
-    //     facebook: Yup.string().required('Required').min(1, 'Minimum 4 symbols'),
-    //     // website: Yup.string().url(),
-    //     // vk: Yup.string().url(),
-    //     // twitter: Yup.string().url(),
-    //     // instagram: Yup.string().url(),
-    //     // youtube: Yup.string().url(),
-    //     // github: Yup.string().url(),
-    //     // mainLink:Yup.string().url(),
-    // })
+    const validationSchema = Yup.object({
+        // fullName: Yup.string().required('Required').min(1, 'Minimum 1 symbols'),
+        // aboutMe: Yup.string().required('Required').min(1, 'Minimum 1 symbols'),
+        // facebook: Yup.string().required('Required').min(1, 'Minimum 4 symbols')
+        // website: Yup.string().url(),
+        // vk: Yup.string().url(),
+        // twitter: Yup.string().url(),
+        // instagram: Yup.string().url(),
+        // youtube: Yup.string().url(),
+        // github: Yup.string().url(),
+        // mainLink:Yup.string().url(),
+    })
 
     const submit = (values: valuesFromProfileEditType, {setSubmitting, resetForm}: {
         setSubmitting: setSubmitting, resetForm: () => void
@@ -57,48 +60,62 @@ export const ProfileEdit = (props: ProfileEditPropsType) => {
 
     return <Formik
         initialValues={initialState}
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={submit}
     >
-        {({isSubmitting, handleChange}) => (
+        {({isSubmitting, handleChange, values}) => (
             <Form>
                 <div className={s.infoDescription}>
                     <div className={s.inputMUI}>
-                        <TextField label="About Me" variant="outlined" name="aboutMe" onChange={handleChange}/>
+                        <TextField value={values.aboutMe} label="About Me" variant="outlined" name="aboutMe"
+                                   onChange={handleChange}/>
                     </div>
                     <div>
-                        <FormControlLabel control={<Checkbox defaultChecked name="lookingForAJob"/>}
-                                          label="Looking For A Job: "/>
-                    </div>
-                    {/*<div className={s.descriptionContacts}>*/}
-                    <div className={s.inputMUI}>
-                        <TextField label="facebook" variant="outlined" name="facebook" onChange={handleChange}/>
+                        <FormControlLabel
+                            control={<Checkbox value={values.lookingForAJob} defaultChecked name="lookingForAJob"
+                                               onChange={handleChange}/>}
+                            label="Looking For A Job: "/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="website" variant="outlined" name="website" onChange={handleChange}/>
+                        <TextField value={values.facebook} label="facebook" variant="outlined" name="facebook"
+                                   onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="vk" variant="outlined" name="vk" onChange={handleChange}/>
+                        <TextField value={values.website} label="website" variant="outlined" name="website"
+                                   onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="twitter" variant="outlined" name="twitter" onChange={handleChange}/>
+                        <TextField value={values.vk} label="vk" variant="outlined" name="vk" onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="instagram" variant="outlined" name="instagram" onChange={handleChange}/>
+                        <TextField value={values.twitter} label="twitter" variant="outlined" name="twitter"
+                                   onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="youtube" variant="outlined" name="youtube" onChange={handleChange}/>
+                        <TextField value={values.instagram} label="instagram" variant="outlined" name="instagram"
+                                   onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="github" variant="outlined" name="github" onChange={handleChange}/>
+                        <TextField value={values.youtube} label="youtube" variant="outlined" name="youtube"
+                                   onChange={handleChange}/>
                     </div>
                     <div className={s.inputMUI}>
-                        <TextField label="mainLink" variant="outlined" name="mainLink" onChange={handleChange}/>
+                        <TextField value={values.github} label="github" variant="outlined" name="github"
+                                   onChange={handleChange}/>
+                    </div>
+                    <div className={s.inputMUI}>
+                        <TextField value={values.mainLink} label="mainLink" variant="outlined" name="mainLink"
+                                   onChange={handleChange}/>
                     </div>
                 </div>
-                {/*</div>*/}
-                <button type="submit" disabled={isSubmitting}>Edit Profile
-                </button>
+                <Button type="submit" variant="contained" size="small"
+                        style={{
+                            // width: '80px',
+                            // height: '40px',
+                            fontSize: '12px',
+                            marginLeft: '10px'
+
+                        }}> Edit Profile </Button>
             </Form>
         )}
     </Formik>

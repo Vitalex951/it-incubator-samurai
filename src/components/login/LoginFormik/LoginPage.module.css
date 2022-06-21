@@ -8,7 +8,12 @@
     border-radius: 10px;
     margin-left: 185px;
 }
-
+.captcha{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+}
 .freeAcc {
     color: white;
     margin: 15px;
@@ -68,6 +73,8 @@
     color: red;
     font-size: 20px;
     min-height: 35px;
+    display: flex;
+    justify-content: center;
 }
 
 .loginBox button:hover {

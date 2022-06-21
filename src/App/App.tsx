@@ -13,10 +13,11 @@ import {Preloader} from "../components/common/Preloader";
 import {showProfileUserTC} from "../redux/reducers/Profile-reducer";
 import {useDispatch} from "react-redux";
 import {AuthUser} from "../redux/reducers/auth-reducer";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 
 function App() {
-    const status = useAppSelector(state => state.appStatus.status)
+    const status = useAppSelector(state => state.app.status)
     const auth = useAppSelector(state => state.auth.data.isAuth)
     const dispatch = useDispatch()
     const myID = useAppSelector(state => state.auth.data.id)
@@ -49,6 +50,7 @@ function App() {
                     </Routes>}
                 </div>
             </div>
+            <ErrorSnackbar/>
         </HashRouter>
     );
 }

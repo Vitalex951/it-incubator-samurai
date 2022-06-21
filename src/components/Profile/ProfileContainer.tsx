@@ -45,15 +45,12 @@ export const ProfileContainer = () => {
         if(myID){
             dispatch(changeProfileTC(fullName, myID, values))
         }
-
-
     }
 
     const addStatus = () => {
         dispatch(updateStatus(valueMainUser))
         setEditMode(false)
     }
-
 
     //set in input my status
     useEffect(() => {

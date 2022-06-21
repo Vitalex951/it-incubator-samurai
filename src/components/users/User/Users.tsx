@@ -62,11 +62,11 @@ const User: React.FC<UserPropsType> = ({user, isFetching, followingInProgress, a
         <div>
 
             {user.followed ?
-                <IconButton aria-label="delete" size="large">
-                    <CloseIcon fontSize="medium" color={'info'} onClick={unFollowHandler}/>
+                <IconButton aria-label="delete" size="large" onClick={unFollowHandler} disabled={disabled}>
+                    <CloseIcon fontSize="medium" color={'info'} />
                 </IconButton>
-                : <IconButton aria-label="delete" size="large">
-                    <CheckCircleIcon fontSize="medium" color={'info'} onClick={followHandler}/>
+                : <IconButton aria-label="delete" size="large"  onClick={followHandler} disabled={disabled}>
+                    <CheckCircleIcon fontSize="medium" color={'info'}/>
                 </IconButton>
             }
         </div>

@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     users: usersReducer,
     auth: authReducer,
-    appStatus: appReducer
+    app: appReducer
 })
 
 declare global {

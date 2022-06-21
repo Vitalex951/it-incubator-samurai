@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {v1} from "uuid";
 import {profileApi, SaveProfileType} from "../../components/api/ProfileApi";
 import {valuesFromProfileEditType} from "../../components/Profile/ProfileEdit/ProfileEdit";
+import {handlerServerNetworkError, handleServerAppError} from "../../components/utils/error-utils";
 
 
 export const initialState: StateType = {
@@ -112,23 +113,33 @@ export const updateProfilePhotoAC = (photo: PhotosType) => {
 
 //Thunk
 export const getStatusMainUser = (userID: string) => (dispatch: Dispatch) => {
-    profileApi.getStatus(userID).then(res => {
-        dispatch(setStatusMainUserAC(res.data))
+    profileApi.getStatus(userID)
+        .then(res => {
+            dispatch(setStatusMainUserAC(res.data))
+        }).catch(err => {
+        handlerServerNetworkError(dispatch, err.message)
     })
 }
 export const getStatusUser = (userID: string) => (dispatch: Dispatch) => {
-    profileApi.getStatus(userID).then(res => {
-        console.log(res)
-        dispatch(setStatusUserAC(res.data))
-    })
+    profileApi.getStatus(userID)
+        .then(res => {
+            dispatch(setStatusUserAC(res.data))
+        })
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
+        })
 }
 export const updateStatus = (status: string) => (dispatch: Dispatch) => {
     profileApi.updateStatus(status)
         .then(res => {
-            console.log('updateStatus', res)
             if (res.data.resultCode === 0) {
                 dispatch(setStatusMainUserAC(status))
+            } else {
+                handleServerAppError(dispatch, res.data)
             }
+        })
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
         })
 }
 export const showProfileUserTC = (paramsID: string) => (dispatch: Dispatch) => {
@@ -137,9 +148,13 @@ export const showProfileUserTC = (paramsID: string) => (dispatch: Dispatch) => {
         .then(res => {
                 dispatch(setUserProfileAC(res.data))
             }
-        ).finally(() => {
-        dispatch(changeLoaderStatusAC(false))
-    })
+        )
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
+        })
+        .finally(() => {
+            dispatch(changeLoaderStatusAC(false))
+        })
 }
 export const changeProfilePhotoTC = (photo: string | Blob) => (dispatch: Dispatch) => {
     dispatch(changeLoaderStatusAC(true))
@@ -147,12 +162,17 @@ export const changeProfilePhotoTC = (photo: string | Blob) => (dispatch: Dispatc
         .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(updateProfilePhotoAC(res.data.data.photos))
+                } else {
+                    handleServerAppError(dispatch, res.data)
                 }
-
             }
-        ).finally(() => {
-        dispatch(changeLoaderStatusAC(false))
-    })
+        )
+        .catch(err => {
+            handlerServerNetworkError(dispatch, err.message)
+        })
+        .finally(() => {
+            dispatch(changeLoaderStatusAC(false))
+        })
 }
 export const changeProfileTC = (fullname: string, userId: number, obj: valuesFromProfileEditType) => (dispatch: any) => {
     dispatch(changeLoaderStatusAC(true))
@@ -176,15 +196,19 @@ export const changeProfileTC = (fullname: string, userId: number, obj: valuesFro
     }
     profileApi.changeProfile(profile)
         .then(res => {
-                debugger
-                console.log(res)
+
                 if (res.data.resultCode === 0) {
                     dispatch(showProfileUserTC(userId.toString()))
+                } else {
+                    handlerServerNetworkError(dispatch, res.data.messages[0])
                 }
             }
-        ).finally(() => {
-        dispatch(changeLoaderStatusAC(false))
+        ).catch(err => {
+        handlerServerNetworkError(dispatch, err.message)
     })
+        .finally(() => {
+            dispatch(changeLoaderStatusAC(false))
+        })
 }
 
 

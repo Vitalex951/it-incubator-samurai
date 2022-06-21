@@ -1,8 +1,7 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import React from "react";
 import * as Yup from 'yup'
-import {useSelector} from "react-redux";
-import {AppRootReducerType} from "../../../redux/store";
+import {useAppSelector} from "../../../redux/store";
 import style from "./LoginPage.module.css";
 
 type LoginFormikType = {
@@ -13,13 +12,17 @@ export type valuesFromFormikType = {
     email: string
     password: string
     rememberMe: boolean
+    captchaURL: null | string
 }
 export const LoginFormik = (props: LoginFormikType) => {
-    const err = useSelector<AppRootReducerType, string>(state => state.auth.messages)
+    const err = useAppSelector(state => state.auth.messages)
+    const captchaURL = useAppSelector(state => state.auth.captchaURL)
+
     const initialState: valuesFromFormikType = {
         email: '',
         password: '',
-        rememberMe: false
+        rememberMe: false,
+        captchaURL: ''
     }
 
     const validationSchema = Yup.object({
@@ -43,7 +46,9 @@ export const LoginFormik = (props: LoginFormikType) => {
         {({isSubmitting}) => (
             <Form className={style.loginBox}>
                 <div>
+
                     <h2>Login</h2>
+
                     <div className={style.freeAcc}>
                         <div>To log in get registered {' '}
                             <a href="https://social-network.samuraijs.com/" target="_blank">here</a></div>
@@ -54,22 +59,33 @@ export const LoginFormik = (props: LoginFormikType) => {
 
                         Password: <span>free</span>
                     </div>
+
                     <div className={style.userBox}>
                         <Field placeholder="Login" type="text" name="email"/>
                         <div className={style.error}>
                             <ErrorMessage name="email" component="div"/>
                         </div>
                     </div>
+
                     <div className={style.userBox}>
                         <Field placeholder="Password" type="password" name="password" autoComplete="on"/>
                         <div className={style.error}>
                             <ErrorMessage name="password" component="div"/>
                         </div>
                     </div>
+
                     <div className={style.checkbox}>
                         <Field placeholder="Remember me" type="checkbox" name="remember Me"/>
                         <span>Remember me</span>
                     </div>
+
+                    {captchaURL && <div className={style.captcha}>
+                        <img src={captchaURL}/>
+                        <div className={style.userBox}>
+                            <Field placeholder="Type Captcha" type="text" name="captchaURL"/>
+                        </div>
+                    </div>}
+
                     <button type="submit" disabled={isSubmitting}>
                         Login
                         <span></span>
