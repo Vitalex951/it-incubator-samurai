@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/it-incubator-samurai/static/css/main.60b5562b.css",
-    "main.js": "/it-incubator-samurai/static/js/main.9a206c6b.js",
+    "main.css": "/it-incubator-samurai/static/css/main.acbe3ab0.css",
+    "main.js": "/it-incubator-samurai/static/js/main.278e4822.js",
     "static/js/787.28cb0dcd.chunk.js": "/it-incubator-samurai/static/js/787.28cb0dcd.chunk.js",
     "static/media/avaHeader.png": "/it-incubator-samurai/static/media/avaHeader.16f5eff04f026c06f853.png",
     "static/media/defaultPhoto.png": "/it-incubator-samurai/static/media/defaultPhoto.45a0af68515332b42be9.png",
     "static/media/scarlett-johansson.jpg": "/it-incubator-samurai/static/media/scarlett-johansson.786746c54ca7c5f2a754.jpg",
     "index.html": "/it-incubator-samurai/index.html",
-    "main.60b5562b.css.map": "/it-incubator-samurai/static/css/main.60b5562b.css.map",
-    "main.9a206c6b.js.map": "/it-incubator-samurai/static/js/main.9a206c6b.js.map",
+    "main.acbe3ab0.css.map": "/it-incubator-samurai/static/css/main.acbe3ab0.css.map",
+    "main.278e4822.js.map": "/it-incubator-samurai/static/js/main.278e4822.js.map",
     "787.28cb0dcd.chunk.js.map": "/it-incubator-samurai/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.60b5562b.css",
-    "static/js/main.9a206c6b.js"
+    "static/css/main.acbe3ab0.css",
+    "static/js/main.278e4822.js"
   ]
 }
