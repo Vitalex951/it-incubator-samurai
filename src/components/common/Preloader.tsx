@@ -4,7 +4,7 @@ import {LinearProgress} from "@mui/material";
 export const Preloader = () => {
     return (
         <div style={{margin: '0'}}>
-            <LinearProgress />
+            <LinearProgress/>
         </div>
     );
 };

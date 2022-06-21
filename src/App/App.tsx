@@ -1,19 +1,18 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import NavBar from "../components/Navbar/Navbar";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {ProfileContainer} from "../components/Profile/ProfileContainer";
 
-import {UsersContainer} from "../components/users/UsersContainer";
+import {UsersContainer} from "../components/Friends/UsersContainer";
 import {HeaderContainer} from "../components/Header/HeaderContainer";
 import {Login} from "../components/login/Login";
-import DialogsContainer from '../components/Dialogs/DialogsContainer';
+import {DialogsContainer} from '../components/Dialogs/DialogsContainer';
 import {useAppSelector} from "../redux/store";
 import {Preloader} from "../components/common/Preloader";
-import {showProfileUserTC} from "../redux/reducers/Profile-reducer";
 import {useDispatch} from "react-redux";
 import {AuthUser} from "../redux/reducers/auth-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Navbar} from "../components/Navbar/Navbar";
 
 
 function App() {
@@ -32,7 +31,7 @@ function App() {
             {auth && <HeaderContainer/>}
             <div style={{height: '5px'}}> {status && <Preloader/>} </div>
             <div className={'app-wrapper'}>
-                {auth && <NavBar/>}
+                {auth && <Navbar/>}
 
                 <div className={'app-wrapper-content'}>
                     {status ? <Preloader/> : <Routes>

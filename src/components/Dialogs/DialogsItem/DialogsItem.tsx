@@ -7,7 +7,7 @@ type users = {
     id: string
 }
 
-const DialogItem = (props: users) => {
+export const DialogItem = (props: users) => {
     let path = '/dialogs/' + props.id
     return (
         <div className={s.dialog + ' ' + s.active}>
@@ -15,6 +15,3 @@ const DialogItem = (props: users) => {
         </div>
     )
 }
-
-
-export default DialogItem;

@@ -26,17 +26,18 @@ export type valuesFromProfileEditType = {
 }
 export const ProfileEdit = (props: ProfileEditPropsType) => {
     const {aboutMe, contacts, lookingForAJob} = useAppSelector(state => state.profile.profile)
+
     const initialState: valuesFromProfileEditType = {
-        aboutMe: aboutMe,
+        aboutMe: aboutMe ? aboutMe : '',
         lookingForAJob: lookingForAJob,
-        facebook: contacts.facebook,
-        website: contacts.website,
-        vk: contacts.vk,
-        twitter: contacts.twitter,
-        instagram: contacts.instagram,
-        youtube: contacts.youtube,
-        github: contacts.github,
-        mainLink: contacts.mainLink,
+        facebook: contacts.facebook ? contacts.facebook : '',
+        website: contacts.website ? contacts.website : '',
+        vk: contacts.vk ? contacts.vk : '',
+        twitter: contacts.twitter ? contacts.twitter : '',
+        instagram: contacts.instagram ? contacts.instagram : '',
+        youtube: contacts.youtube ? contacts.youtube : '',
+        github: contacts.github ? contacts.github : '',
+        mainLink: contacts.mainLink ? contacts.mainLink : '',
     }
 
     const validationSchema = Yup.object({

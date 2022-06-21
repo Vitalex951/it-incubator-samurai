@@ -5,15 +5,16 @@ import ava from '../../img/avaHeader.png'
 import {AuthLoginOut, AuthUser} from "../../redux/reducers/auth-reducer";
 import {useDispatch} from "react-redux";
 import avchik from '../../img/defaultPhoto.png'
-import {Preloader} from "../common/Preloader";
 
 type HeaderPropsType = {
     mainUser: AuthUser
 }
 
-const Header = (props: HeaderPropsType) => {
+export const Header = (props: HeaderPropsType) => {
     const dispathc = useDispatch()
+
     const logOutHandler = () => dispathc(AuthLoginOut())
+
     return <header className={s.header}>
         <div className={s.wrapper}>
             <img src={ava}/>
@@ -34,5 +35,3 @@ const Header = (props: HeaderPropsType) => {
     </header>
 
 };
-
-export default Header;

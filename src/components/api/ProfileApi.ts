@@ -1,5 +1,5 @@
 import {instance} from "./instance";
-import {userType} from "../users/UsersContainer";
+import {userType} from "../Friends/UsersContainer";
 import {PhotosType, ProfileType} from "../../redux/reducers/Profile-reducer";
 import {AxiosResponse} from "axios";
 

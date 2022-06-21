@@ -58,6 +58,7 @@ position: relative;
 }
 .info span {
     padding: 5px;
+
 }
 
 .infoContainer {
@@ -71,6 +72,7 @@ position: relative;
 }
 .infoDescription span {
     padding: 5px;
+    min-height: 22px;
 }
 .infoContacts {
     display: flex;
@@ -82,7 +84,6 @@ position: relative;
 }
 
 .descriptionContacts {
-    margin-top: 22px;
     display: flex;
     flex-direction: column;
 }

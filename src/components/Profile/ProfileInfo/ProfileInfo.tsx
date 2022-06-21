@@ -24,18 +24,11 @@ type ProfileInfoProps = {
 }
 const ProfileInfo = (props: ProfileInfoProps) => {
     const [fullName, setFullName] = useState<string>('')
+
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             props.changeProfilePhoto(e.target.files[0])
         }
-    }
-    useEffect(() => {
-        if (props.profile?.fullName)
-            setFullName(props.profile.fullName)
-    }, [props.profile?.fullName])
-    const [edit, setEdit] = useState<boolean>(false)
-    const changeEditOnClick = () => {
-        setEdit(!edit)
     }
     const onChangeFullName = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFullName(e.currentTarget.value)
@@ -44,14 +37,23 @@ const ProfileInfo = (props: ProfileInfoProps) => {
         props.editProfile(fullName, values)
     }
 
+    useEffect(() => {
+        if (props.profile?.fullName)
+            setFullName(props.profile.fullName)
+    }, [props.profile?.fullName])
+    const [edit, setEdit] = useState<boolean>(false)
+    const changeEditOnClick = () => {
+        setEdit(!edit)
+    }
+
     if (!props.profile) return <Preloader/>
 
-    return (
-        <div className={s.mainBlock}>
-            <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large ? props.profile.photos.large : ava}/>
+    return <div className={s.mainBlock}>
+        <div className={s.descriptionBlock}>
+            <img src={props.profile.photos.large ? props.profile.photos.large : ava}/>
 
-                {props.profile.userId && <div className={s.editPhoto}>
+            {props.profile.userId
+                && <div className={s.editPhoto}>
                     <input
                         id='addPhoto'
                         type='file'
@@ -61,31 +63,35 @@ const ProfileInfo = (props: ProfileInfoProps) => {
                         <AiOutlineCamera size={24}/>
                     </label>
                 </div>}
+        </div>
+
+        <div className={s.data}>
+            <div className={s.fullName}>
+                {edit
+                    ? <TextField label="FullName" value={fullName} variant="outlined"
+                                 onChange={onChangeFullName}/>
+                    : props.profile.fullName}
+
+                {props.isUser === "mainUser" && <FaEdit onClick={changeEditOnClick} size={25}/>}
             </div>
 
-            <div className={s.data}>
-                <div className={s.fullName}>
-                    {edit
-                        ? <TextField label="FullName" value={fullName} variant="outlined"
-                                     onChange={onChangeFullName}/>
-                        : props.profile.fullName}
+            {edit
+                ? ''
+                : <ProfileStatus
+                    addStatus={props.addStatus}
+                    valueMainUser={props.valueMainUser}
+                    setValueMainUser={props.setValueMainUser}
+                    editMode={props.editMode}
+                    onDoubleClick={props.onDoubleClick}
+                    isUser={props.isUser}
+                    valueUser={props.valueUser}
+                />
+            }
+            <hr/>
 
-                    {props.isUser === "mainUser" && <FaEdit onClick={changeEditOnClick} size={25}/>}
-                </div>
-                {edit
-                    ? ''
-                    : <ProfileStatus
-                        addStatus={props.addStatus}
-                        valueMainUser={props.valueMainUser}
-                        setValueMainUser={props.setValueMainUser}
-                        editMode={props.editMode}
-                        onDoubleClick={props.onDoubleClick}
-                        isUser={props.isUser}
-                        valueUser={props.valueUser}
-                    />
-                }
-                <hr/>
-                {edit ? <ProfileEdit editProfile={editProfile}/> : <div className={s.infoContainer}>
+            {edit
+                ? <ProfileEdit editProfile={editProfile}/>
+                : <div className={s.infoContainer}>
                     <div className={s.info}>
                         <span>About Me:</span>
                         <span>Looking For A Job:</span>
@@ -101,6 +107,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
                             <span>mainLink:</span>
                         </div>
                     </div>
+
                     <div className={s.infoDescription}>
                         <span>{props.profile.aboutMe}</span>
                         <span>{props.profile.lookingForAJob.toString()}</span>
@@ -117,13 +124,10 @@ const ProfileInfo = (props: ProfileInfoProps) => {
                         </div>
                     </div>
 
-                </div>}
-
-            </div>
-
-
+                </div>
+            }
         </div>
-    );
+    </div>
 };
 
 export default ProfileInfo;

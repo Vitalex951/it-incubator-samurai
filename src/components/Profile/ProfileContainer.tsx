@@ -3,7 +3,9 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../redux/store";
 import {
-    changeIsStatusAC, changeProfilePhotoTC, changeProfileTC,
+    changeIsStatusAC,
+    changeProfilePhotoTC,
+    changeProfileTC,
     getStatusMainUser,
     getStatusUser,
     showProfileUserTC,
@@ -42,7 +44,7 @@ export const ProfileContainer = () => {
     }
 
     const editProfile = (fullName: string, values: valuesFromProfileEditType) => {
-        if(myID){
+        if (myID) {
             dispatch(changeProfileTC(fullName, myID, values))
         }
     }
@@ -56,7 +58,7 @@ export const ProfileContainer = () => {
     useEffect(() => {
         if (myID) {
             getStatusMainUser(myID.toString())
-            if (statusMainUser){
+            if (statusMainUser) {
                 setValueMainUser(statusMainUser)
             }
         }
@@ -77,15 +79,16 @@ export const ProfileContainer = () => {
 
     if (!auth) return <Navigate to="/login"/>
 
-    return (
-        <div className={style.container}>
-            {statusLoader ? <div style={{
+    return <div className={style.container}>
+        {statusLoader
+            ? <div style={{
                 width: '640px',
                 height: '500px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-            }}><CircularProgress/></div> : <>
+            }}><CircularProgress/></div>
+            : <>
                 <ProfileInfo
                     editProfile={editProfile}
                     changeProfilePhoto={changeProfilePhoto}
@@ -100,7 +103,6 @@ export const ProfileContainer = () => {
                 />
                 <MyPosts posts={posts}/>
             </>
-            }
-        </div>
-    );
+        }
+    </div>
 };

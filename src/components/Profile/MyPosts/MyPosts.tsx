@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
-import Post from "./Posts/Post";
+import {Post} from "./Posts/Post";
 import {addPostAC, PostDataType} from "../../../redux/reducers/Profile-reducer";
 import {useDispatch} from "react-redux";
 import {AddMPostForm} from "./AddNewPost";
@@ -10,7 +10,6 @@ type MyPostsPropsType = {
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
-
     const dispatch = useDispatch()
 
     const postsData = props.posts.map(m => <Post
@@ -22,16 +21,13 @@ export const MyPosts = (props: MyPostsPropsType) => {
         dispatch(addPostAC(value))
     }
 
-    return (
+    return <div className={s.postsBlock}>
+        <h3>My Post</h3>
 
-        <div className={s.postsBlock}>
-            <h3>My Post</h3>
-
-            <AddMPostForm callback={onClickAdd}/>
-            <div className={s.posts}>
-                {postsData}
-            </div>
+        <AddMPostForm callback={onClickAdd}/>
+        <div className={s.posts}>
+            {postsData}
         </div>
-    );
+    </div>
 };
 

@@ -14,8 +14,7 @@ export const Login = () => {
     const email = useAppSelector(state => state.auth.data.email)
 
     if (email) return <Navigate to="/profile"/>
-    return  <LoginFormik callback={logIn}/>
-
+    return <LoginFormik callback={logIn}/>
 }
 
 

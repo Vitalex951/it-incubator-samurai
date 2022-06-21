@@ -2,6 +2,7 @@ import React from 'react';
 import {Input} from "../../../Input/Input";
 import {StatusType} from "../../../../redux/reducers/Profile-reducer";
 import s from './ProfileStatus.module.css'
+import {useAppSelector} from "../../../../redux/store";
 
 type ProfileStatusPropsType = {
     editMode: boolean
@@ -15,15 +16,14 @@ type ProfileStatusPropsType = {
 }
 
 export const ProfileStatus = (props: ProfileStatusPropsType) => {
+    const statusValue = useAppSelector(state => state.profile.statusMainUser)
+
     const onDoubleClickHandler = () => {
         props.onDoubleClick(true)
     }
 
-
-    return (
-        <div>
-
-            {props.isUser === "mainUser"
+    return <div>
+        {props.isUser === "mainUser"
             &&
             (props.editMode ? <div className={s.status}>
                     <Input
@@ -37,13 +37,11 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
                 </div>
                 : <div>
                     <span
-                        onDoubleClick={onDoubleClickHandler}>{props.valueMainUser ? props.valueMainUser : 'set status'}</span>
-                </div>)}
+                        onDoubleClick={onDoubleClickHandler}>{statusValue ? statusValue : 'set status'}</span>
+                </div>)
+        }
 
-
-            {props.isUser === "user"
+        {props.isUser === "user"
             && <span>{props.valueUser ? props.valueUser : 'no status'}</span>}
-
-        </div>
-    );
+    </div>
 };

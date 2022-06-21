@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {UserAPI} from "../../components/api/UserAPI";
 import {profileApi} from "../../components/api/ProfileApi";
 import {setUserStatusAC} from "./app-reducer";
-import {userType} from "../../components/users/UsersContainer";
+import {userType} from "../../components/Friends/UsersContainer";
 import {handlerServerNetworkError, handleServerAppError} from "../../components/utils/error-utils";
 
 const initialState: usersType = {

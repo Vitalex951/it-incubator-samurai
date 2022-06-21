@@ -1,6 +1,5 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import s from './Dialogs.module.css'
-import {DialogsType, UsersType} from "../trash/store";
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessage} from "../../redux/reducers/dialogs-reducer";
 import {Navigate} from "react-router-dom";
@@ -9,11 +8,10 @@ import {AppRootReducerType, useAppSelector} from "../../redux/store";
 import ava from '../../img/personal-user.png'
 import scr from '../../img/scarlett-johansson.jpg'
 
-const DialogsContainer = () => {
+export  const DialogsContainer = () => {
     const dispatch = useDispatch()
     const auth = useSelector<AppRootReducerType, boolean>(state => state.auth.data.isAuth)
     const message = useAppSelector(state => state.dialogs.dialogs)
-
 
     const onclickAddNewBody = (values: messageType) => {
 
@@ -22,10 +20,9 @@ const DialogsContainer = () => {
 
     const objDiv = document.querySelector('#scrollID')
 
-
     useEffect(() => {
-        if (objDiv){
-            objDiv.scrollTo(0,  objDiv.scrollHeight)
+        if (objDiv) {
+            objDiv.scrollTo(0, objDiv.scrollHeight)
         }
     }, [message])
 
@@ -39,30 +36,27 @@ const DialogsContainer = () => {
     //         }
     //     }
     // }, [objDiv])
-
     // const scrollHandler = (e: any) => {
     //     // e.target.scrollHeight = e.target.scrollTop
     //     // console.log(e)
     //     console.log(e.target.scrollHeight)
     //     console.log(e.target.scrollTop)
     // }
+    // const myRef = useRef(null)
 
+    // const executeScroll = () => {
+    //     if (myRef !== null){
+    //         // @ts-ignore
+    //         // @ts-ignore
+    //         console.log( myRef.current.scrollTop)
+    //         // @ts-ignore
+    //         console.log( myRef.current.offsetTop)
+    //         // @ts-ignore
+    //         console.log( myRef.current.scrollTop)
+    //     }
+    // }
 
-        // const myRef = useRef(null)
-        //
-        // const executeScroll = () => {
-        //     if (myRef !== null){
-        //         // @ts-ignore
-        //         // @ts-ignore
-        //         console.log( myRef.current.scrollTop)
-        //         // @ts-ignore
-        //         console.log( myRef.current.offsetTop)
-        //         // @ts-ignore
-        //         console.log( myRef.current.scrollTop)
-        //     }
-        // }
-
-        if (!auth) return <Navigate to="/login"/>
+    if (!auth) return <Navigate to="/login"/>
 
     return (
         <div className={s.dialogs}>
@@ -112,11 +106,11 @@ const DialogsContainer = () => {
                         </div>
 
                     </div>
-                    <div className={s.message} >
+                    <div className={s.message}>
                         <h5>Vasya</h5>
                         <hr/>
                         <div id={'scrollID'} className={s.messagesBlock}>
-                            <div  className={s.messageContainer}>
+                            <div className={s.messageContainer}>
                                 <img src={ava}/>
                                 <div className={s.text}>
                                     Where are you? Go play football
@@ -158,4 +152,3 @@ const DialogsContainer = () => {
         ;
 };
 
-export default DialogsContainer;

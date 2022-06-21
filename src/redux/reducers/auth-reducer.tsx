@@ -44,7 +44,6 @@ export const setUserDataAC = (id: number | null, login: string | null, email: st
     } as const
 }
 export const getCaptchaURLAC = (captchaURL: string | null) => {
-    debugger
     return {
         type: 'AUTH/GET-CAPTCHA-URL', captchaURL
     } as const
@@ -112,7 +111,6 @@ export const AuthLoginOut = (): ThunkType => (dispatch) => {
 export const getCaptchaURL = (): ThunkType => (dispatch) => {
     securityApi.getCaptchaURL()
         .then(res => {
-            console.log(res)
             dispatch(getCaptchaURLAC(res.data.url))
         })
         .catch(err => {

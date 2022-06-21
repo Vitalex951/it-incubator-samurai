@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 
-import {Users} from "./User/Users";
+import {Users} from "./Users/Users";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootReducerType, useAppSelector} from "../../redux/store";
 import {changeFollowTC, changeUNFollowTC, getUsersTC} from "../../redux/reducers/users-reducer";
 import {Navigate} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
-import Paginator from "./Paginator/Paginator";
+import {Paginator} from "./Paginator/Paginator";
 import s from './UsersContainer.module.css'
 import {Preloader} from "../common/Preloader";
 

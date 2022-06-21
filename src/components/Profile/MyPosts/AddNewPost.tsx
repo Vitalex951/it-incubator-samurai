@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState, KeyboardEvent} from "react";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import s from './MyPosts.module.css'
@@ -16,13 +16,19 @@ export const AddMPostForm = (props: AddPostFormPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setValue(e.currentTarget.value)
     }
-    const addPostClick = () => {
+    const addPostClick = () => {debugger
         props.callback(value)
         setValue('')
     }
+    const addPostClickEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            props.callback(value)
+            setValue('')
+        }
+    }
 
     return <div className={s.addPostContainer}>
-        <TextField onChange={onChangeHandler} value={value} id="outlined-basic" label="What's new?" variant="outlined"/>
+        <TextField onChange={onChangeHandler} value={value} id="outlined-basic" label="What's new?" variant="outlined" onKeyPress={addPostClickEnter}/>
         <Button variant="contained" size="small" onClick={addPostClick}
                 style={{
                     width: '80px',
