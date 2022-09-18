@@ -19,8 +19,8 @@ export const LoginFormik = (props: LoginFormikType) => {
     const captchaURL = useAppSelector(state => state.auth.captchaURL)
 
     const initialState: valuesFromFormikType = {
-        email: '',
-        password: '',
+        email: 'vitalex951@gmail.com',
+        password: '123456789',
         rememberMe: false,
         captchaURL: ''
     }
